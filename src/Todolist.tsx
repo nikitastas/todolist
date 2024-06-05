@@ -1,8 +1,10 @@
-type TodolistPropsType = {
+type Props = {
     title: string;
+    isDone: boolean;
+    id: number;
 }
 
-export const Todolist = ({title}: TodolistPropsType) => {
+export const Todolist = ({title}: Props) => {
     return (
         <div>
             <h3>{title}</h3>
