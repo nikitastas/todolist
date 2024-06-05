@@ -1,8 +1,8 @@
-type PropsType = {
+type TodolistPropsType = {
     title: string;
 }
 
-export const Todolist = ({title}: PropsType) => {
+export const Todolist = ({title}: TodolistPropsType) => {
     return (
         <div>
             <h3>{title}</h3>
