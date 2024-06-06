@@ -16,11 +16,7 @@ export function App() {
         { id: 5, title: 'Typescript ', isDone: false },
         { id: 6, title: 'RTK query', isDone: false },
     ]
-    const tasks2: Array<Task> = [
-        { id: 1, title: 'Hello world', isDone: true },
-        { id: 2, title: 'I am Happy', isDone: false },
-        { id: 3, title: 'Yo', isDone: false },
-    ]
+    const tasks2: Array<Task> = []
     return (
         <div className="App">
             <Todolist title = {"What to learn"} tasks={tasks1} date={'06.06.2024'}/>
