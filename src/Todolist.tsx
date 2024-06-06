@@ -1,3 +1,5 @@
+import {Button} from './Button';
+
 type Props = {
     title: string
     tasks: Array<Task>
@@ -16,7 +18,7 @@ export const Todolist = ({title, tasks, date}: Props) => {
             <h3>{title}</h3>
             <div>
                 <input/>
-                <button>+</button>
+                <Button title={'+'}/>
             </div>
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
