@@ -30,7 +30,7 @@ export const Todolist = ({title, tasks, date, removeTask}: Props) => {
                             <li key={task.id}>
                                 <input type="checkbox" checked={task.isDone}/>
                                 <span>{task.title}</span>
-                                <button onClick={() => removeTask(task.id)}>x</button>
+                                <Button title={'x'} onClick={() => removeTask(task.id)}/>
                             </li>
                         )
                     })}
