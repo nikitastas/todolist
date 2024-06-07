@@ -17,6 +17,10 @@ export function App() {
         { id: 6, title: 'RTK query', isDone: false },
     ]
 
+    const removeTask = (taskId: number) => {
+        alert(taskId)
+    }
+
     return (
         <div className="App">
             <Todolist title = {"What to learn"} tasks={tasks1} date={'06.06.2024'}/>
