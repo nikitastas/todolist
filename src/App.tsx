@@ -23,7 +23,7 @@ export function App() {
 
     return (
         <div className="App">
-            <Todolist title = {"What to learn"} tasks={tasks1} date={'06.06.2024'}/>
+            <Todolist title = {"What to learn"} tasks={tasks1} date={'06.06.2024'} removeTask={removeTask}/>
         </div>
     );
 }
