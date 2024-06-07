@@ -8,7 +8,7 @@ type Task = {
 }
 
 export function App() {
-    const tasks1: Array<Task> = [
+    let tasks1: Array<Task> = [
         { id: 1, title: 'HTML&CSS', isDone: true },
         { id: 2, title: 'JS', isDone: true },
         { id: 3, title: 'ReactJS', isDone: false },
@@ -18,7 +18,7 @@ export function App() {
     ]
 
     const removeTask = (taskId: number) => {
-        alert(taskId)
+        tasks1 = tasks1.filter(task => task.id !== taskId);
     }
 
     return (
