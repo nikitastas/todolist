@@ -8,6 +8,8 @@ type Task = {
     isDone: boolean
 }
 
+export type FilterValues = 'all' | 'active' | 'completed';
+
 export function App() {
     const [tasks, setTasks] = useState<Array<Task>>([
         { id: 1, title: 'HTML&CSS', isDone: true },
@@ -18,7 +20,7 @@ export function App() {
         { id: 6, title: 'RTK query', isDone: false },
     ])
 
-    const [filter, setFilter] = useState('all');
+    const [filter, setFilter] = useState<FilterValues>('all');
 
     const removeTask = (taskId: number) => {
         const filteredTasks = tasks.filter(task => task.id !== taskId);
