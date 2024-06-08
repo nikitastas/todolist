@@ -18,6 +18,8 @@ export function App() {
         { id: 6, title: 'RTK query', isDone: false },
     ])
 
+    const [filter, setFilter] = useState('all');
+
     const removeTask = (taskId: number) => {
         const filteredTasks = tasks.filter(task => task.id !== taskId)
         setTasks(filteredTasks)
