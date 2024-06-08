@@ -21,13 +21,23 @@ export function App() {
     const [filter, setFilter] = useState('all');
 
     const removeTask = (taskId: number) => {
-        const filteredTasks = tasks.filter(task => task.id !== taskId)
-        setTasks(filteredTasks)
+        const filteredTasks = tasks.filter(task => task.id !== taskId);
+        setTasks(filteredTasks);
     }
+
+    let tasksForTodolist = tasks;
+    if (filter === 'active') {
+        tasksForTodolist = tasks.filter(task => task.isDone === false);
+    }
+
+    if (filter === 'completed') {
+        tasksForTodolist = tasks.filter(task => task.isDone === true);
+    }
+
 
     return (
         <div className="App">
-            <Todolist title = {"What to learn"} tasks={tasks} date={'06.06.2024'} removeTask={removeTask}/>
+            <Todolist title = {"What to learn"} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}/>
         </div>
     );
 }
