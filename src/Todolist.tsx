@@ -1,10 +1,12 @@
 import {Button} from './Button';
+import {FilterValues} from './App';
 
 type Props = {
     title: string
     tasks: Array<Task>
     date?: string
     removeTask: (taskId: number) => void
+    changeFilter: (filter: FilterValues) => void
 }
 
 type Task = {
@@ -13,7 +15,7 @@ type Task = {
     isDone: boolean
 }
 
-export const Todolist = ({title, tasks, date, removeTask}: Props) => {
+export const Todolist = ({title, tasks, date, removeTask, changeFilter}: Props) => {
     return (
         <div>
             <h3>{title}</h3>
