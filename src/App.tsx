@@ -21,8 +21,14 @@ export function App() {
         {id: v1(), title: 'RTK query', isDone: false},
     ])
 
-    const addTask = () => {
-        alert('Add task')
+    const addTask = (title: string) => {
+        const newTask = {
+            id: v1(),
+            title,
+            isDone: false,
+        }
+        const newTasks = [newTask, ...tasks]
+        setTasks(newTasks)
     }
     
     const [filter, setFilter] = useState<FilterValues>('all');
