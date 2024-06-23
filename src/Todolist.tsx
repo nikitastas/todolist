@@ -1,6 +1,6 @@
 import {Button} from './Button';
 import {FilterValues} from './App';
-import {useRef} from 'react';
+import {useState} from 'react';
 
 type Props = {
     title: string
@@ -18,18 +18,21 @@ type Task = {
 }
 
 export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}: Props) => {
-    const inputRef = useRef<HTMLInputElement>(null)
+    const [taskTitle, setTaskTitle] = useState('')
+
+    const addTaskHandler = () => {
+        addTask(taskTitle)
+        setTaskTitle('')
+    }
+
     return (
         <div>
             <h3>{title}</h3>
             <div>
-                <input ref={inputRef} />
-                <Button title={'+'} onClick={() => {
-                    if (inputRef.current) {
-                        addTask(inputRef.current.value)
-                        inputRef.current.value = ''
-                    }
-                }} />
+                <input value={taskTitle}
+                       onChange={(e) => setTaskTitle(e.currentTarget.value)}
+                />
+                <Button title={'+'} onClick={addTaskHandler}/>
             </div>
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
@@ -38,9 +41,9 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}
                     {tasks.map(task => {
                         return (
                             <li key={task.id}>
-                                <input type="checkbox" checked={task.isDone} />
+                                <input type="checkbox" checked={task.isDone}/>
                                 <span>{task.title}</span>
-                                <Button title={'x'} onClick={() => removeTask(task.id)} />
+                                <Button title={'x'} onClick={() => removeTask(task.id)}/>
                             </li>
                         )
                     })}
