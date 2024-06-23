@@ -9,7 +9,7 @@ type Task = {
     isDone: boolean
 }
 
-export type FilterValues = 'all' | 'active' | 'completed';
+export type FilterValuesType = 'all' | 'active' | 'completed';
 
 export function App() {
     const [tasks, setTasks] = useState<Array<Task>>([
@@ -31,14 +31,14 @@ export function App() {
         setTasks(newTasks)
     }
     
-    const [filter, setFilter] = useState<FilterValues>('all');
+    const [filter, setFilter] = useState<FilterValuesType>('all');
 
     const removeTask = (taskId: string) => {
         const filteredTasks = tasks.filter(task => task.id !== taskId);
         setTasks(filteredTasks);
     }
 
-    const changeFilter = (filter: FilterValues) => {
+    const changeFilter = (filter: FilterValuesType) => {
         setFilter(filter);
     }
 

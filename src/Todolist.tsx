@@ -1,5 +1,5 @@
 import {Button} from './Button';
-import {FilterValues} from './App';
+import {FilterValuesType} from './App';
 import {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 type Props = {
@@ -7,7 +7,7 @@ type Props = {
     tasks: Array<Task>
     date?: string
     removeTask: (taskId: string) => void
-    changeFilter: (filter: FilterValues) => void
+    changeFilter: (filter: FilterValuesType) => void
     addTask: (title: string) => void
 }
 
@@ -29,6 +29,10 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}
     }
     const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') addTaskHandler()
+    }
+
+    const changeFilterTasksHandler = (filter: FilterValuesType) => {
+        changeFilter(filter)
     }
 
     return (
@@ -58,9 +62,9 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}
             )}
 
             <div>
-                <Button title={'All'} onClick={() => changeFilter('all')}/>
-                <Button title={'Active'} onClick={() => changeFilter('active')}/>
-                <Button title={'Completed'} onClick={() => changeFilter('completed')}/>
+                <Button title={'All'} onClick={() => changeFilterTasksHandler('all')}/>
+                <Button title={'Active'} onClick={() => changeFilterTasksHandler('active')}/>
+                <Button title={'Completed'} onClick={() => changeFilterTasksHandler('completed')}/>
             </div>
             <div>{date}</div>
         </div>
