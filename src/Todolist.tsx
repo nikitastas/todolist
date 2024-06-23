@@ -1,6 +1,6 @@
 import {Button} from './Button';
 import {FilterValues} from './App';
-import {ChangeEvent, useState} from 'react';
+import {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 type Props = {
     title: string
@@ -27,6 +27,9 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}
     const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskTitle(e.currentTarget.value)
     }
+    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') addTaskHandler()
+    }
 
     return (
         <div>
@@ -34,9 +37,7 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}
             <div>
                 <input value={taskTitle}
                        onChange={changeTaskTitleHandler}
-                       onKeyUp={e => {
-                           if (e.key === 'Enter') addTaskHandler()
-                       }}
+                       onKeyUp={addTaskOnKeyUpHandler}
                 />
                 <Button title={'+'} onClick={addTaskHandler}/>
             </div>
