@@ -5,23 +5,24 @@ type Props = {
     title: string
     tasks: Array<Task>
     date?: string
-    removeTask: (taskId: number) => void
+    removeTask: (taskId: string) => void
     changeFilter: (filter: FilterValues) => void
+    addTask: () => void
 }
 
 type Task = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
 
-export const Todolist = ({title, tasks, date, removeTask, changeFilter}: Props) => {
+export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask}: Props) => {
     return (
         <div>
             <h3>{title}</h3>
             <div>
                 <input/>
-                <Button title={'+'}/>
+                <Button title={'+'} onClick={addTask}/>
             </div>
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
