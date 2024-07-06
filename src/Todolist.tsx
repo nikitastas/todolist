@@ -68,7 +68,7 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask,
                             changeTaskStatus(task.id, newStatusValue)
                         }
                         return (
-                            <li key={task.id}>
+                            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                                 <span>{task.title}</span>
                                 <Button title={'x'} onClick={removeTaskHandler}/>
@@ -82,8 +82,12 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask,
                 <Button className={filter === 'all' ? 'active-filter' : ''}
                         title={'All'}
                         onClick={() => changeFilterTasksHandler('all')}/>
-                <Button className={filter === 'active' ? 'active-filter' : ''} title={'Active'} onClick={() => changeFilterTasksHandler('active')}/>
-                <Button className={filter === 'completed' ? 'active-filter' : ''} title={'Completed'} onClick={() => changeFilterTasksHandler('completed')}/>
+                <Button className={filter === 'active' ? 'active-filter' : ''}
+                        title={'Active'}
+                        onClick={() => changeFilterTasksHandler('active')}/>
+                <Button className={filter === 'completed' ? 'active-filter' : ''}
+                        title={'Completed'}
+                        onClick={() => changeFilterTasksHandler('completed')}/>
             </div>
             <div>{date}</div>
         </div>
