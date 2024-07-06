@@ -23,7 +23,7 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask,
 
     const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            addTask(taskTitle)
+            addTask(taskTitle.trim())
             setTaskTitle('')
         }
     }
