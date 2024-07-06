@@ -60,7 +60,7 @@ export function App() {
     return (
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus}/>
+                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus} filter={filter}/>
         </div>
     );
 }
