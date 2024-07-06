@@ -42,6 +42,10 @@ export function App() {
         setFilter(filter);
     }
 
+    const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
+        setTasks(tasks.map(m => m.id === taskId ? {...m, isDone: taskStatus} : m))
+    }
+
     let tasksForTodolist = tasks;
     if (filter === 'active') {
         tasksForTodolist = tasks.filter(task => !task.isDone);
@@ -55,7 +59,7 @@ export function App() {
     return (
         <div className="App">
             <Todolist title={'What to learn'} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask}/>
+                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus}/>
         </div>
     );
 }
