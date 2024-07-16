@@ -9,9 +9,20 @@ type Task = {
     isDone: boolean
 }
 
-export type FilterValuesType = 'all' | 'active' | 'completed';
+type Todolist = {
+    id: string
+    title: string
+    filter: FilterValues
+}
+
+export type FilterValues = 'all' | 'active' | 'completed';
 
 export function App() {
+    const [todolists, setTodolists] = useState<Todolist[]>([
+        {id: v1(), title: 'What to learn', filter: 'all'},
+        {id: v1(), title: 'What to buy', filter: 'all'},
+    ])
+
     const [tasks, setTasks] = useState<Array<Task>>([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
@@ -30,15 +41,15 @@ export function App() {
         const newTasks = [newTask, ...tasks]
         setTasks(newTasks)
     }
-    
-    const [filter, setFilter] = useState<FilterValuesType>('all');
+
+    const [filter, setFilter] = useState<FilterValues>('all');
 
     const removeTask = (taskId: string) => {
         const filteredTasks = tasks.filter(task => task.id !== taskId);
         setTasks(filteredTasks);
     }
 
-    const changeFilter = (filter: FilterValuesType) => {
+    const changeFilter = (filter: FilterValues) => {
         setFilter(filter);
     }
 
@@ -56,11 +67,14 @@ export function App() {
         tasksForTodolist = tasks.filter(task => task.isDone);
     }
 
-
     return (
         <div className="App">
-            <Todolist title={'What to learn'} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
-                      changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus} filter={filter}/>
+            {todolists.map(tl => {
+                return (
+                    <Todolist key={tl.id} title={tl.title} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
+                              changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus} filter={tl.filter}/>
+                )
+            })}
         </div>
     );
 }
