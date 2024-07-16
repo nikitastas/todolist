@@ -3,11 +3,12 @@ import {FilterValues} from './App';
 import {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 type Props = {
+    todolistId: string
     title: string
     tasks: Array<Task>
     date?: string
     removeTask: (taskId: string) => void
-    changeFilter: (filter: FilterValues) => void
+    changeFilter: (todolistId: string, filter: FilterValues) => void
     addTask: (title: string) => void
     changeTaskStatus: (taskId: string, taskStatus: boolean) => void
     filter: FilterValues
@@ -19,7 +20,7 @@ type Task = {
     isDone: boolean
 }
 
-export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask, changeTaskStatus, filter}: Props) => {
+export const Todolist = ({todolistId, title, tasks, date, removeTask, changeFilter, addTask, changeTaskStatus, filter}: Props) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -39,8 +40,8 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask,
         if (e.key === 'Enter') addTaskHandler()
     }
 
-    const changeFilterTasksHandler = (filter: FilterValues) => {
-        changeFilter(filter)
+    const changeFilterTasksHandler = (todolistId: string, filter: FilterValues) => {
+        changeFilter(todolistId, filter)
     }
 
     return (
@@ -81,13 +82,13 @@ export const Todolist = ({title, tasks, date, removeTask, changeFilter, addTask,
             <div>
                 <Button className={filter === 'all' ? 'active-filter' : ''}
                         title={'All'}
-                        onClick={() => changeFilterTasksHandler('all')}/>
+                        onClick={() => changeFilterTasksHandler(todolistId, 'all')}/>
                 <Button className={filter === 'active' ? 'active-filter' : ''}
                         title={'Active'}
-                        onClick={() => changeFilterTasksHandler('active')}/>
+                        onClick={() => changeFilterTasksHandler(todolistId, 'active')}/>
                 <Button className={filter === 'completed' ? 'active-filter' : ''}
                         title={'Completed'}
-                        onClick={() => changeFilterTasksHandler('completed')}/>
+                        onClick={() => changeFilterTasksHandler(todolistId, 'completed')}/>
             </div>
             <div>{date}</div>
         </div>

@@ -42,15 +42,13 @@ export function App() {
         setTasks(newTasks)
     }
 
-    const [filter, setFilter] = useState<FilterValues>('all');
-
     const removeTask = (taskId: string) => {
         const filteredTasks = tasks.filter(task => task.id !== taskId);
         setTasks(filteredTasks);
     }
 
-    const changeFilter = (filter: FilterValues) => {
-        setFilter(filter);
+    const changeFilter = (todolistId: string, filter: FilterValues) => {
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter: filter} : tl));
     }
 
     const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
@@ -58,20 +56,19 @@ export function App() {
         setTasks(newState)
     }
 
-    let tasksForTodolist = tasks;
-    if (filter === 'active') {
-        tasksForTodolist = tasks.filter(task => !task.isDone);
-    }
-
-    if (filter === 'completed') {
-        tasksForTodolist = tasks.filter(task => task.isDone);
-    }
-
     return (
         <div className="App">
             {todolists.map(tl => {
+                let tasksForTodolist = tasks;
+                if (tl.filter === 'active') {
+                    tasksForTodolist = tasks.filter(task => !task.isDone);
+                }
+
+                if (tl.filter === 'completed') {
+                    tasksForTodolist = tasks.filter(task => task.isDone);
+                }
                 return (
-                    <Todolist key={tl.id} title={tl.title} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
+                    <Todolist key={tl.id} todolistId={tl.id} title={tl.title} tasks={tasksForTodolist} date={'06.06.2024'} removeTask={removeTask}
                               changeFilter={changeFilter} addTask={addTask} changeTaskStatus={changeTaskStatus} filter={tl.filter}/>
                 )
             })}
