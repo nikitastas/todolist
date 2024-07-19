@@ -7,10 +7,10 @@ type Props = {
     title: string
     tasks: Array<Task>
     date?: string
-    removeTask: (taskId: string) => void
+    removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, filter: FilterValues) => void
-    addTask: (title: string) => void
-    changeTaskStatus: (taskId: string, taskStatus: boolean) => void
+    addTask: (title: string, todolistId: string) => void
+    changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
     filter: FilterValues
 }
 
@@ -26,7 +26,7 @@ export const Todolist = ({todolistId, title, tasks, date, removeTask, changeFilt
 
     const addTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim())
+            addTask(taskTitle.trim(), todolistId)
             setTaskTitle('')
         } else {
             setError('Title is required')
@@ -62,11 +62,11 @@ export const Todolist = ({todolistId, title, tasks, date, removeTask, changeFilt
                 <ul>
                     {tasks.map(task => {
                         const removeTaskHandler = () => {
-                            removeTask(task.id)
+                            removeTask(task.id, todolistId)
                         }
                         const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
                             const newStatusValue = e.currentTarget.checked
-                            changeTaskStatus(task.id, newStatusValue)
+                            changeTaskStatus(task.id, newStatusValue, todolistId)
                         }
                         return (
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
