@@ -7,11 +7,12 @@ type Props = {
     title: string
     tasks: Array<Task>
     date?: string
+    filter: FilterValues
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (todolistId: string, filter: FilterValues) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
-    filter: FilterValues
+    removeTodolist: (todolistId: string) => void
 }
 
 type Task = {
@@ -20,7 +21,8 @@ type Task = {
     isDone: boolean
 }
 
-export const Todolist = ({todolistId, title, tasks, date, removeTask, changeFilter, addTask, changeTaskStatus, filter}: Props) => {
+export const Todolist = ({todolistId, title, tasks, date, filter, removeTask,
+                             changeFilter, addTask, changeTaskStatus, removeTodolist}: Props) => {
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -44,9 +46,16 @@ export const Todolist = ({todolistId, title, tasks, date, removeTask, changeFilt
         changeFilter(todolistId, filter)
     }
 
+    const removeTodolistHandler = () => {
+        removeTodolist(todolistId)
+    }
+
     return (
         <div>
-            <h3>{title}</h3>
+            <div className={'todolist-title-container'}>
+                <h3>{title}</h3>
+                <Button title={'x'} onClick={removeTodolistHandler} />
+            </div>
             <div>
                 <input className={error ? 'error' : ''}
                        value={taskTitle}
