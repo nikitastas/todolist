@@ -1,8 +1,9 @@
 import {Button} from './Button';
 import {FilterValues} from './App';
-import {ChangeEvent, KeyboardEvent, useState} from 'react';
+import {ChangeEvent} from 'react';
+import {AddItemFrom} from './AddItemForm';
 
-type Props = {
+type Todolist = {
     todolistId: string
     title: string
     tasks: Array<Task>
@@ -22,24 +23,9 @@ type Task = {
 }
 
 export const Todolist = ({todolistId, title, tasks, date, filter, removeTask,
-                             changeFilter, addTask, changeTaskStatus, removeTodolist}: Props) => {
-    const [taskTitle, setTaskTitle] = useState('')
-    const [error, setError] = useState<string | null>(null)
-
-    const addTaskHandler = () => {
-        if (taskTitle.trim() !== '') {
-            addTask(taskTitle.trim(), todolistId)
-            setTaskTitle('')
-        } else {
-            setError('Title is required')
-        }
-    }
-    const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTaskTitle(e.currentTarget.value)
-    }
-    const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
-        if (e.key === 'Enter') addTaskHandler()
+                             changeFilter, addTask, changeTaskStatus, removeTodolist}: Todolist) => {
+    const addTaskCallback = (title: string) => {
+        addTask(title, todolistId)
     }
 
     const changeFilterTasksHandler = (todolistId: string, filter: FilterValues) => {
@@ -56,15 +42,7 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask,
                 <h3>{title}</h3>
                 <Button title={'x'} onClick={removeTodolistHandler} />
             </div>
-            <div>
-                <input className={error ? 'error' : ''}
-                       value={taskTitle}
-                       onChange={changeTaskTitleHandler}
-                       onKeyUp={addTaskOnKeyUpHandler}
-                />
-                <Button title={'+'} onClick={addTaskHandler}/>
-                {error && <div className={'error-message'}>{error}</div>}
-            </div>
+            <AddItemFrom addItem={addTaskCallback}/>
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
