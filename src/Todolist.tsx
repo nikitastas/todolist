@@ -14,8 +14,9 @@ type Todolist = {
     changeFilter: (todolistId: string, filter: FilterValues) => void
     addTask: (title: string, todolistId: string) => void
     changeTaskStatus: (taskId: string, taskStatus: boolean, todolistId: string) => void
-    removeTodolist: (todolistId: string) => void
     updateTask: (todolistId: string, taskId: string, task: string) => void
+    removeTodolist: (todolistId: string) => void
+    updateTodolistTitle: (todolistId: string, title: string) => void
 }
 
 type Task = {
@@ -24,7 +25,7 @@ type Task = {
     isDone: boolean
 }
 
-export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, updateTask,
+export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, updateTask, updateTodolistTitle,
                              changeFilter, addTask, changeTaskStatus, removeTodolist}: Todolist) => {
     const addTaskCallback = (title: string) => {
         addTask(title, todolistId)
@@ -37,11 +38,14 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
     const removeTodolistHandler = () => {
         removeTodolist(todolistId)
     }
+    const updateTodolistTitleHandler = (title: string) => {
+        updateTodolistTitle(todolistId, title)
+    }
 
     return (
         <div>
             <div className={'todolist-title-container'}>
-                <h3>{title}</h3>
+                <h3><EditableSpan value={title} onChange={updateTodolistTitleHandler} /></h3>
                 <Button title={'x'} onClick={removeTodolistHandler} />
             </div>
             <AddItemFrom addItem={addTaskCallback}/>
