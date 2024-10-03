@@ -69,6 +69,10 @@ export function App() {
             [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: taskStatus} : t) })
     }
 
+    const updateTask = (todolistId: string, taskId: string, title: string) => {
+        setTasks({...tasks, [todolistId]: [...tasks[todolistId].map(t => taskId === t.id ? {...t, title} : t)]})
+    }
+
     const removeTodolist = (todolistId: string) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistId))
         const myTasks = {...tasks}
@@ -98,7 +102,9 @@ export function App() {
                 return (
                     <Todolist key={tl.id} todolistId={tl.id} title={tl.title} tasks={tasksForTodolist}
                               date={'06.06.2024'} filter={tl.filter} removeTask={removeTask} changeFilter={changeFilter}
-                              addTask={addTask} changeTaskStatus={changeTaskStatus} removeTodolist={removeTodolist}/>
+                              addTask={addTask} changeTaskStatus={changeTaskStatus} removeTodolist={removeTodolist}
+                              updateTask={updateTask}
+                    />
                 )
             })}
         </div>
