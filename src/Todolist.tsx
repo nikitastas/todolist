@@ -3,6 +3,8 @@ import {FilterValues} from './App';
 import {ChangeEvent} from 'react';
 import {AddItemFrom} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 type Todolist = {
     todolistId: string
@@ -46,7 +48,10 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
         <div>
             <div className={'todolist-title-container'}>
                 <h3><EditableSpan value={title} onChange={updateTodolistTitleHandler} /></h3>
-                <Button title={'x'} onClick={removeTodolistHandler} />
+                {/*<Button title={'x'} onClick={removeTodolistHandler} />*/}
+                <IconButton onClick={removeTodolistHandler}>
+                    <DeleteIcon />
+                </IconButton>
             </div>
             <AddItemFrom addItem={addTaskCallback}/>
             {tasks.length === 0 ? (
@@ -69,6 +74,9 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
                                 <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
                                 <Button title={'x'} onClick={removeTaskHandler}/>
+                                <IconButton onClick={removeTaskHandler}>
+                                    <DeleteIcon />
+                                </IconButton>
                             </li>
                         )
                     })}
