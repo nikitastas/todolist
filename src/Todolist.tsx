@@ -1,10 +1,10 @@
-import {Button} from './Button';
 import {FilterValues} from './App';
 import {ChangeEvent} from 'react';
 import {AddItemFrom} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
 
 type Todolist = {
     todolistId: string
@@ -27,8 +27,10 @@ type Task = {
     isDone: boolean
 }
 
-export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, updateTask, updateTodolistTitle,
-                             changeFilter, addTask, changeTaskStatus, removeTodolist}: Todolist) => {
+export const Todolist = ({
+                             todolistId, title, tasks, date, filter, removeTask, updateTask, updateTodolistTitle,
+                             changeFilter, addTask, changeTaskStatus, removeTodolist
+                         }: Todolist) => {
     const addTaskCallback = (title: string) => {
         addTask(title, todolistId)
     }
@@ -47,10 +49,10 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
     return (
         <div>
             <div className={'todolist-title-container'}>
-                <h3><EditableSpan value={title} onChange={updateTodolistTitleHandler} /></h3>
+                <h3><EditableSpan value={title} onChange={updateTodolistTitleHandler}/></h3>
                 {/*<Button title={'x'} onClick={removeTodolistHandler} />*/}
                 <IconButton onClick={removeTodolistHandler}>
-                    <DeleteIcon />
+                    <DeleteIcon/>
                 </IconButton>
             </div>
             <AddItemFrom addItem={addTaskCallback}/>
@@ -75,7 +77,7 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
                                 <Button title={'x'} onClick={removeTaskHandler}/>
                                 <IconButton onClick={removeTaskHandler}>
-                                    <DeleteIcon />
+                                    <DeleteIcon/>
                                 </IconButton>
                             </li>
                         )
@@ -84,17 +86,23 @@ export const Todolist = ({todolistId, title, tasks, date, filter, removeTask, up
             )}
 
             <div>
-                <Button className={filter === 'all' ? 'active-filter' : ''}
-                        title={'All'}
-                        onClick={() => changeFilterTasksHandler(todolistId, 'all')}/>
-                <Button className={filter === 'active' ? 'active-filter' : ''}
-                        title={'Active'}
-                        onClick={() => changeFilterTasksHandler(todolistId, 'active')}/>
-                <Button className={filter === 'completed' ? 'active-filter' : ''}
-                        title={'Completed'}
-                        onClick={() => changeFilterTasksHandler(todolistId, 'completed')}/>
+                <Button variant={filter === 'all' ? 'outlined' : 'text'}
+                        color={'inherit'}
+                        onClick={() => changeFilterTasksHandler(todolistId, 'all')}>
+                    All
+                    </Button>
+                    <Button variant={filter === 'active' ? 'outlined' : 'text'}
+                            color={'primary'}
+                            onClick={() => changeFilterTasksHandler(todolistId, 'active')}>
+                        Active
+                    </Button>
+                    <Button variant={filter === 'completed' ? 'outlined' : 'text'}
+                            color={'secondary'}
+                            onClick={() => changeFilterTasksHandler(todolistId, 'completed')}>
+                        Completed
+                    </Button>
             </div>
             <div>{date}</div>
         </div>
-    )
+)
 }
