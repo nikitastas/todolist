@@ -5,6 +5,9 @@ import {EditableSpan} from './EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 type Todolist = {
     todolistId: string
@@ -59,7 +62,7 @@ export const Todolist = ({
             {tasks.length === 0 ? (
                 <p>Тасок нет</p>
             ) : (
-                <ul>
+                <List>
                     {tasks.map(task => {
                         const removeTaskHandler = () => {
                             removeTask(task.id, todolistId)
@@ -72,17 +75,22 @@ export const Todolist = ({
                             updateTask(todolistId, task.id, title)
                         }
                         return (
-                            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                                <input type="checkbox" checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                            <ListItem
+                                key={task.id}
+                                disableGutters
+                                disablePadding
+                                className={task.isDone ? 'is-done' : ''}
+                            >
+                                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
                                 <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
                                 <Button title={'x'} onClick={removeTaskHandler}/>
                                 <IconButton onClick={removeTaskHandler}>
                                     <DeleteIcon/>
                                 </IconButton>
-                            </li>
+                            </ListItem>
                         )
                     })}
-                </ul>
+                </List>
             )}
 
             <div>
@@ -102,7 +110,6 @@ export const Todolist = ({
                         Completed
                     </Button>
             </div>
-            <div>{date}</div>
         </div>
 )
 }

@@ -1,5 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
 import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
 
 type AddItemForm = {
     addItem: (title: string) => void
@@ -27,15 +28,26 @@ export const AddItemFrom = ({addItem}: AddItemForm) => {
 
     return (
         <div>
-            <input className={error ? 'error' : ''}
+            {/*<input className={error ? 'error' : ''}
                    value={itemTitle}
                    onChange={changeTaskTitleHandler}
                    onKeyUp={addTaskOnKeyUpHandler}
+            />*/}
+            <TextField
+                label='Enter a title'
+                variant={'outlined'}
+                className={error ? 'error' : ''}
+                value={itemTitle}
+                size={'small'}
+                error={!!error}
+                helperText={error}
+                onChange={changeTaskTitleHandler}
+                onKeyUp={addTaskOnKeyUpHandler}
             />
-            <Button variant='contained' size='small' onClick={addTaskHandler}>
+            <Button variant='contained' onClick={addTaskHandler}>
                 +
             </Button>
-            {error && <div className={'error-message'}>{error}</div>}
+            {/*{error && <div className={'error-message'}>{error}</div>}*/}
         </div>
     )
 }
