@@ -1,5 +1,5 @@
 import './App.css';
-import { v1 } from 'uuid'
+import {v1} from 'uuid'
 import {Todolist} from './Todolist';
 import {useState} from 'react';
 import {AddItemFrom} from './AddItemForm';
@@ -10,6 +10,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import {MenuButton} from './MenuButton';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import Switch from '@mui/material/Switch';
 
 type Task = {
     id: string
@@ -29,7 +34,20 @@ type TasksState = {
 
 export type FilterValues = 'all' | 'active' | 'completed';
 
+type ThemeMode = 'dark' | 'light'
+
 export function App() {
+    const [themeMode, setThemeMode] = useState<ThemeMode>('light')
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
+            primary: {
+                main: '#087EA4',
+            },
+        },
+    })
+
     let todolistID1 = v1()
     let todolistID2 = v1()
 
@@ -59,11 +77,11 @@ export function App() {
             title,
             isDone: false,
         }
-        setTasks({ ...tasks, [todolistId]: [newTask, ...tasks[todolistId]] })
+        setTasks({...tasks, [todolistId]: [newTask, ...tasks[todolistId]]})
     }
 
     const removeTask = (taskId: string, todolistId: string) => {
-        setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId) })
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
 
     const changeFilter = (todolistId: string, filter: FilterValues) => {
@@ -73,7 +91,8 @@ export function App() {
     const changeTaskStatus = (taskId: string, taskStatus: boolean, todolistId: string) => {
         setTasks({
             ...tasks,
-            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: taskStatus} : t) })
+            [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: taskStatus} : t)
+        })
     }
 
     const updateTask = (todolistId: string, taskId: string, title: string) => {
@@ -97,18 +116,29 @@ export function App() {
         setTodolists([...todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl)])
     }
 
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
     return (
-        <div>
-            <AppBar position='static'>
-                <Toolbar>
-                    <IconButton color='inherit'>
-                        <MenuIcon />
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <AppBar position="static" sx={{mb: '30px'}}>
+                <Toolbar sx={{display: 'flex', justifyContent: 'space-between'}}>
+                    <IconButton color="inherit">
+                        <MenuIcon/>
                     </IconButton>
+                    <div>
+                        <MenuButton>Login</MenuButton>
+                        <MenuButton>Logout</MenuButton>
+                        <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
+                        <Switch color={'default'} onChange={changeModeHandler} />
+                    </div>
                 </Toolbar>
             </AppBar>
             <Container fixed>
-                <Grid container>
-                    <AddItemFrom addItem={addTodolist} />
+                <Grid container sx={{mb: '30px'}}>
+                    <AddItemFrom addItem={addTodolist}/>
                 </Grid>
 
                 <Grid container spacing={4}>
@@ -124,10 +154,12 @@ export function App() {
                         }
                         return (
                             <Grid>
-                                <Paper>
+                                <Paper elevation={4} sx={{p: '0 20px 20px 20px'}}>
                                     <Todolist key={tl.id} todolistId={tl.id} title={tl.title} tasks={tasksForTodolist}
-                                              date={'06.06.2024'} filter={tl.filter} removeTask={removeTask} changeFilter={changeFilter}
-                                              addTask={addTask} changeTaskStatus={changeTaskStatus} removeTodolist={removeTodolist}
+                                              date={'06.06.2024'} filter={tl.filter} removeTask={removeTask}
+                                              changeFilter={changeFilter}
+                                              addTask={addTask} changeTaskStatus={changeTaskStatus}
+                                              removeTodolist={removeTodolist}
                                               updateTask={updateTask} updateTodolistTitle={updateTodolistTitle}
                                     />
                                 </Paper>
@@ -136,6 +168,6 @@ export function App() {
                     })}
                 </Grid>
             </Container>
-        </div>
+        </ThemeProvider>
     );
 }

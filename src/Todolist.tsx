@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Box from '@mui/material/Box';
+import {filterButtonsContainerSx, getListItemSx} from './Todolist.styles';
 
 type Todolist = {
     todolistId: string
@@ -77,12 +79,12 @@ export const Todolist = ({
                         return (
                             <ListItem
                                 key={task.id}
-                                disableGutters
-                                disablePadding
-                                className={task.isDone ? 'is-done' : ''}
+                                sx={getListItemSx(task.isDone)}
                             >
-                                <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
-                                <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                                <div>
+                                    <Checkbox checked={task.isDone} onChange={changeTaskStatusHandler}/>
+                                    <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                                </div>
                                 <Button title={'x'} onClick={removeTaskHandler}/>
                                 <IconButton onClick={removeTaskHandler}>
                                     <DeleteIcon/>
@@ -93,7 +95,7 @@ export const Todolist = ({
                 </List>
             )}
 
-            <div>
+            <Box sx={filterButtonsContainerSx}>
                 <Button variant={filter === 'all' ? 'outlined' : 'text'}
                         color={'inherit'}
                         onClick={() => changeFilterTasksHandler(todolistId, 'all')}>
@@ -109,7 +111,7 @@ export const Todolist = ({
                             onClick={() => changeFilterTasksHandler(todolistId, 'completed')}>
                         Completed
                     </Button>
-            </div>
+            </Box>
         </div>
 )
 }
