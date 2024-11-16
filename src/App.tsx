@@ -22,7 +22,7 @@ type Task = {
     isDone: boolean
 }
 
-type Todolist = {
+export type Todolist = {
     id: string
     title: string
     filter: FilterValues
