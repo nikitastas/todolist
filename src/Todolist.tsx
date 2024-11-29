@@ -11,7 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {filterButtonsContainerSx, getListItemSx} from './Todolist.styles';
 
-type Todolist = {
+type TodolistProps = {
     todolistId: string
     title: string
     tasks: Array<Task>
@@ -35,7 +35,7 @@ type Task = {
 export const Todolist = ({
                              todolistId, title, tasks, date, filter, removeTask, updateTask, updateTodolistTitle,
                              changeFilter, addTask, changeTaskStatus, removeTodolist
-                         }: Todolist) => {
+                         }: TodolistProps) => {
     const addTaskCallback = (title: string) => {
         addTask(title, todolistId)
     }
