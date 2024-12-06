@@ -4,12 +4,9 @@ import {v1} from 'uuid';
 let todolistID1 = v1()
 let todolistID2 = v1()
 
-const initialState: Todolist[] = [
-    {id: todolistID1, title: 'What to learn', filter: 'all'},
-    {id: todolistID2, title: 'What to buy', filter: 'all'},
-]
+const initialState: Todolist[] = []
 
-export const todolistsReducer = (state: Todolist[] = initialState, action: Actions) => {
+export const todolistsReducer = (state: Todolist[] = initialState, action: Actions): Array<Todolist> => {
     switch (action.type) {
         case 'REMOVE-TODOLIST': {
             return state.filter(tl => tl.id !== action.payload.id)
@@ -17,12 +14,14 @@ export const todolistsReducer = (state: Todolist[] = initialState, action: Actio
         case 'ADD-TODOLIST': {
             return [{id: action.payload.todolistId, title: action.payload.title, filter: 'all'}, ...state]
         }
-        case 'CHANGE-TODOLIST-TITLE':
+        case 'CHANGE-TODOLIST-TITLE': {
             return state.map(tl => tl.id === action.payload.id ? {...tl, title: action.payload.title} : tl)
-        case 'CHANGE-TODOLIST-FILTER':
+        }
+        case 'CHANGE-TODOLIST-FILTER': {
             return state.map(tl => tl.id === action.payload.id ? {...tl, filter: action.payload.filter} : tl)
+        }
         default:
-            throw new Error("I don't understand this type")
+            return state
     }
 }
 
