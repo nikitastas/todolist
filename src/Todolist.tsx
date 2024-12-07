@@ -1,4 +1,4 @@
-import {FilterValues} from './App';
+import {FilterValues} from './app/App';
 import {ChangeEvent} from 'react';
 import {AddItemFrom} from './AddItemForm';
 import {EditableSpan} from './EditableSpan';
