@@ -1,8 +1,8 @@
-import {Tasks} from '../app/App';
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './tasks-reducer';
-import {addTodolistAC, removeTodolistAC} from './todolists-reducer';
 
-let startState: Tasks = {}
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TasksType, tasksReducer} from '../tasks-reducer';
+import {addTodolistAC, removeTodolistAC} from '../todolists-reducer';
+
+let startState: TasksType = {}
 
 beforeEach(() => {
     startState = {
@@ -73,7 +73,7 @@ test('title of specified task should be changed', () => {
         startState,
         changeTaskTitleAC({
             taskId: '2',
-            newTitle: 'Whey powder, Creatine, Trenbolone acetate',
+            title: 'Whey powder, Creatine, Trenbolone acetate',
             todolistId: 'todolistId2',
         })
     )
