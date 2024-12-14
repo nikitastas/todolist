@@ -1,3 +1,4 @@
+import s from './TodolistTitle.module.css'
 import {EditableSpan} from '../../../../../../common/components/EditableSpan/EditableSpan';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -21,7 +22,7 @@ export const TodolistTitle = ({todolist}: Props) => {
     }
 
     return (
-        <div className={'container'}>
+        <div className={s.container}>
             <h3><EditableSpan value={todolist.title} onChange={updateTodolistTitleHandler}/></h3>
             <IconButton onClick={removeTodolistHandler}>
                 <DeleteIcon/>

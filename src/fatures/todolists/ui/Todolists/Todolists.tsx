@@ -13,7 +13,7 @@ export const Todolists = () => {
         <>
             {todolists.map(tl => {
                 return (
-                    <Grid>
+                    <Grid key={tl.id}>
                         <Paper elevation={4} sx={{p: '0 20px 20px 20px'}}>
                             <Todolist key={tl.id} todolist={tl} />
                         </Paper>

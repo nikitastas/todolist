@@ -5,18 +5,19 @@ import {Tasks} from './Tasks/Tasks';
 import {TodolistTitle} from './TodolistTitle/TodolistTitle';
 import {addTaskAC} from '../../../model/tasks-reducer';
 import {useAppDispatch} from '../../../../../common/hooks/useAppDispatch';
+import {memo, useCallback} from 'react';
 
 type Props = {
     todolist: TodolistType
 }
 
-export const Todolist = ({ todolist }: Props) => {
-
+export const Todolist = memo(({ todolist }: Props) => {
+    console.log(`Todolist ${todolist.title}`)
     const dispatch = useAppDispatch()
 
-    const addTaskCallback = (title: string) => {
+    const addTaskCallback = useCallback((title: string) => {
         dispatch(addTaskAC({title, todolistId: todolist.id}))
-    }
+    }, [dispatch, todolist.id])
 
     return (
         <div>
@@ -26,4 +27,4 @@ export const Todolist = ({ todolist }: Props) => {
             <FilterTasksButtons todolist={todolist} />
         </div>
 )
-}
+})
