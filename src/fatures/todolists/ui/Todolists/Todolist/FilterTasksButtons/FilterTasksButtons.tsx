@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import {changeTodolistFilterAC, FilterValues, TodolistType} from '../../../../model/todolists-reducer';
 import {filterButtonsContainerSx} from './FilterTasksButtons.style';
 import {useAppDispatch} from '../../../../../../common/hooks/useAppDispatch';
+import {useCallback} from 'react';
 
 type Props = {
     todolist: TodolistType
@@ -13,9 +14,9 @@ export const FilterTasksButtons = ({todolist}: Props) => {
 
     const dispatch = useAppDispatch()
 
-    const changeFilterTasksHandler = (filter: FilterValues) => {
+    const changeFilterTasksHandler = useCallback((filter: FilterValues) => {
         dispatch(changeTodolistFilterAC({id, filter}))
-    }
+    }, [dispatch, id])
 
     return (
         <Box sx={filterButtonsContainerSx}>
@@ -34,6 +35,21 @@ export const FilterTasksButtons = ({todolist}: Props) => {
                     onClick={() => changeFilterTasksHandler('completed')}>
                 Completed
             </Button>
+            {/*<ButtonWithMemo variant={filter === 'all' ? 'outlined' : 'text'}
+                    color={'inherit'}
+                    onClick={() => changeFilterTasksHandler('all')}>
+                All
+            </ButtonWithMemo>
+            <ButtonWithMemo variant={filter === 'active' ? 'outlined' : 'text'}
+                    color={'primary'}
+                    onClick={() => changeFilterTasksHandler('active')}>
+                Active
+            </ButtonWithMemo>
+            <ButtonWithMemo variant={filter === 'completed' ? 'outlined' : 'text'}
+                    color={'secondary'}
+                    onClick={() => changeFilterTasksHandler('completed')}>
+                Completed
+            </ButtonWithMemo>*/}
         </Box>
     )
 }

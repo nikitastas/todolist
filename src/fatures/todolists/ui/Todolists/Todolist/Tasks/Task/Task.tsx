@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import ListItem from '@mui/material/ListItem';
 import {TodolistType} from '../../../../../model/todolists-reducer';
 import {changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, TaskType} from '../../../../../model/tasks-reducer';
-import {ChangeEvent} from 'react';
+import {ChangeEvent, memo, useCallback} from 'react';
 import {getListItemSx} from './Task.tyles';
 import {useAppDispatch} from '../../../../../../../common/hooks/useAppDispatch';
 
@@ -14,21 +14,22 @@ type TaskProps = {
     todolist: TodolistType
 }
 
-export const Task = ({task, todolist}: TaskProps) => {
+export const Task = memo(({task, todolist}: TaskProps) => {
+    console.log('Task')
     const dispatch = useAppDispatch()
 
-    const removeTaskHandler = () => {
+    const removeTaskHandler = useCallback(() => {
         dispatch(removeTaskAC({ taskId: task.id, todolistId: todolist.id }))
-    }
+    }, [dispatch, task.id, todolist.id])
 
-    const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeTaskStatusHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         const isDone = e.currentTarget.checked
         dispatch(changeTaskStatusAC({ taskId: task.id, isDone, todolistId: todolist.id }))
-    }
+    }, [dispatch, task.id, todolist.id])
 
-    const changeTaskTitleHandler = (title: string) => {
+    const changeTaskTitleHandler = useCallback((title: string) => {
         dispatch(changeTaskTitleAC({ taskId: task.id, todolistId: todolist.id, title }))
-    }
+    }, [dispatch, task.id, todolist.id])
 
     return (
         <ListItem key={task.id} sx={getListItemSx(task.isDone)}>
@@ -41,4 +42,4 @@ export const Task = ({task, todolist}: TaskProps) => {
             </IconButton>
         </ListItem>
     )
-}
+})
