@@ -9,7 +9,7 @@ import {ChangeEvent, memo, useCallback} from 'react';
 import {getListItemSx} from './Task.tyles';
 import {useAppDispatch} from '../../../../../../../common/hooks/useAppDispatch';
 
-type TaskProps = {
+export type TaskProps = {
     task: TaskType
     todolist: TodolistType
 }

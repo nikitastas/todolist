@@ -3,12 +3,11 @@ import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import AddBoxIcon from'@mui/icons-material/AddBox'
 
-type Props = {
+export type Props = {
     addItem: (title: string) => void
 }
 
 export const AddItemForm = memo(({addItem}: Props) => {
-    console.log('AddItemForm')
 
     const [itemTitle, setItemTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
