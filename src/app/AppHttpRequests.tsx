@@ -130,7 +130,7 @@ export const AppHttpRequests = () => {
                                 return (
                                     <div key={task.id}>
                                         <Checkbox
-                                            checked={task.status === 2 ? true : false}
+                                            checked={task.status === 2}
                                             onChange={e => changeTaskStatusHandler(e, task)}
                                         />
                                         <EditableSpan
