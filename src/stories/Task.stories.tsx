@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { action } from "@storybook/addon-actions"
 import React from "react"
 import { Task, TaskProps } from "../fatures/todolists/ui/Todolists/Todolist/Tasks/Task/Task"
 import { v1 } from "uuid"

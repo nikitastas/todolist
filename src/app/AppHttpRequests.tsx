@@ -21,8 +21,8 @@ export const AppHttpRequests = () => {
         axios
           .get<GetTasksResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${tl.id}/tasks`, {
             headers: {
-              Authorization: "Bearer a5eb66c8-2c92-47d8-ba61-3503673d2c5b",
-              "API-KEY": "926038eb-8d19-4217-8295-14f6fb32c43a",
+              Authorization: `Bearer ${process.env.REACT_APP_AUTH_TOKEN}`,
+              "API-KEY": process.env.REACT_APP_API_KEY,
             },
           })
           .then((res) => {

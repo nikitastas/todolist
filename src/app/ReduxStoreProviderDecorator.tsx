@@ -1,6 +1,6 @@
 import React from "react"
 import { Provider } from "react-redux"
-import { RootState, store } from "./store"
+import { RootState } from "./store"
 import { combineReducers, legacy_createStore } from "redux"
 import { tasksReducer } from "../fatures/todolists/model/tasks-reducer"
 import { todolistsReducer } from "../fatures/todolists/model/todolists-reducer"

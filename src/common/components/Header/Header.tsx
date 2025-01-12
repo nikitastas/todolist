@@ -2,13 +2,13 @@ import React from "react"
 import Toolbar from "@mui/material/Toolbar"
 import IconButton from "@mui/material/IconButton"
 import MenuIcon from "@mui/icons-material/Menu"
-import { MenuButton } from "../MenuButton/MenuButton"
+import { MenuButton } from "../MenuButton"
 import Switch from "@mui/material/Switch"
 import AppBar from "@mui/material/AppBar"
 import { changeThemeAC, ThemeMode } from "../../../app/app-reducer"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../../../app/store"
-import { getTheme } from "../../theme/theme"
+import { getTheme } from "../../theme"
 
 export const Header = () => {
   const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
