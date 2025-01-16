@@ -4,6 +4,7 @@ import { Task, TaskProps } from "../fatures/todolists/ui/Todolists/Todolist/Task
 import { v1 } from "uuid"
 import { Provider } from "react-redux"
 import { store } from "../app/store"
+import { TaskPriority } from "common/enums"
 
 const TaskWithProvider = (args: TaskProps) => (
   <Provider store={store}>
@@ -29,8 +30,19 @@ const meta: Meta<typeof Task> = {
     },*/
   },
   args: {
-    task: { id: "qewwre2", title: "JS", isDone: true },
-    todolist: { id: v1(), title: "Todolist Title", filter: "all" },
+    task: {
+      id: "qewwre2",
+      title: "JS",
+      status: 2,
+      order: 0,
+      addedDate: "",
+      todoListId: "",
+      deadline: "",
+      description: "",
+      startDate: "",
+      priority: TaskPriority.Low,
+    },
+    todolist: { id: v1(), title: "Todolist Title", filter: "all", addedDate: "", order: 0 },
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
 } // satisfies Meta<typeof Button>;
@@ -43,6 +55,17 @@ export const TaskIsDoneStory: Story = {}
 
 export const TaskIsNotDoneStory: Story = {
   args: {
-    task: { id: "qewwre2", title: "CSS", isDone: false },
+    task: {
+      id: "qewwre2",
+      title: "JS",
+      status: 0,
+      order: 0,
+      addedDate: "",
+      todoListId: "",
+      deadline: "",
+      description: "",
+      startDate: "",
+      priority: TaskPriority.Low,
+    },
   },
 }

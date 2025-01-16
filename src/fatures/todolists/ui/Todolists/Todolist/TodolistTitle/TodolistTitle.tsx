@@ -2,12 +2,12 @@ import s from "./TodolistTitle.module.css"
 import { EditableSpan } from "common/components/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { changeTodolistTitleAC, removeTodolistAC, TodolistType } from "../../../../model/todolists-reducer"
+import { changeTodolistTitleAC, DomainTodolist, removeTodolistAC } from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useCallback } from "react"
 
 type Props = {
-  todolist: TodolistType
+  todolist: DomainTodolist
 }
 
 export const TodolistTitle = ({ todolist }: Props) => {
