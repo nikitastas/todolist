@@ -2,7 +2,7 @@ import s from "./TodolistTitle.module.css"
 import { EditableSpan } from "common/components/EditableSpan"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { changeTodolistTitleAC, DomainTodolist, removeTodolistAC } from "../../../../model/todolists-reducer"
+import { DomainTodolist, removeTodolistTC, updateTodolistTitleTC } from "../../../../model/todolists-reducer"
 import { useAppDispatch } from "common/hooks/useAppDispatch"
 import { useCallback } from "react"
 
@@ -16,11 +16,14 @@ export const TodolistTitle = ({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
   const removeTodolistHandler = () => {
-    dispatch(removeTodolistAC(id))
+    dispatch(removeTodolistTC(id))
   }
-  const updateTodolistTitleHandler = useCallback(() => {
-    dispatch(changeTodolistTitleAC({ id, title }))
-  }, [dispatch, id, title])
+  const updateTodolistTitleHandler = useCallback(
+    (title: string) => {
+      dispatch(updateTodolistTitleTC({ id, title }))
+    },
+    [dispatch, id, title],
+  )
 
   return (
     <div className={s.container}>

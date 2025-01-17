@@ -1,11 +1,13 @@
-import { addTodolistAC, todolistsReducer, TodolistType } from "../todolists-reducer"
+import { addTodolistAC, DomainTodolist, todolistsReducer } from "../todolists-reducer"
 import { TasksType, tasksReducer } from "../tasks-reducer"
+import { v1 } from "uuid"
 
 test("ids should be equals", () => {
   const startTasksState: TasksType = {}
-  const startTodolistsState: TodolistType[] = []
+  const startTodolistsState: DomainTodolist[] = []
+  const newId = v1()
 
-  const action = addTodolistAC("new todolist")
+  const action = addTodolistAC({ id: newId, title: "new todolist" })
 
   const endTasksState = tasksReducer(startTasksState, action)
   const endTodolistsState = todolistsReducer(startTodolistsState, action)
@@ -14,6 +16,6 @@ test("ids should be equals", () => {
   const idFromTasks = keys[0]
   const idFromTodolists = endTodolistsState[0].id
 
-  expect(idFromTasks).toBe(action.payload.todolistId)
-  expect(idFromTodolists).toBe(action.payload.todolistId)
+  expect(idFromTasks).toBe(action.payload.id)
+  expect(idFromTodolists).toBe(action.payload.id)
 })
