@@ -1,12 +1,12 @@
-import List from "@mui/material/List"
-import { DomainTodolist } from "../../../../model/todolists-reducer"
-import { Task } from "./Task/Task"
-import { useAppSelector } from "common/hooks/useAppSelector"
-import { selectTasks } from "../../../../model/tasksSelector"
-import { TaskStatus } from "common/enums"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { useEffect } from "react"
-import { fetchTasksTC } from "../../../../model/tasks-reducer"
+import List from '@mui/material/List'
+import { DomainTodolist } from '../../../../model/todolists-reducer'
+import { Task } from './Task/Task'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { selectTasks } from '../../../../model/tasksSelector'
+import { TaskStatus } from 'common/enums'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useEffect } from 'react'
+import { fetchTasksTC } from '../../../../model/tasks-reducer'
 
 type Props = {
   todolist: DomainTodolist
@@ -25,11 +25,11 @@ export const Tasks = ({ todolist }: Props) => {
 
   let tasksForTodolist = allTodolistTasks
 
-  if (todolist.filter === "active") {
+  if (todolist.filter === 'active') {
     tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.New)
   }
 
-  if (todolist.filter === "completed") {
+  if (todolist.filter === 'completed') {
     tasksForTodolist = allTodolistTasks.filter((task) => task.status === TaskStatus.Completed)
   }
 

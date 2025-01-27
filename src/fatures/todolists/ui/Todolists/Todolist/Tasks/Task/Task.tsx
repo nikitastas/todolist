@@ -1,15 +1,15 @@
-import Checkbox from "@mui/material/Checkbox"
-import IconButton from "@mui/material/IconButton"
-import DeleteIcon from "@mui/icons-material/Delete"
-import ListItem from "@mui/material/ListItem"
-import { DomainTodolist } from "../../../../../model/todolists-reducer"
-import { removeTaskTC, updateTaskTC } from "../../../../../model/tasks-reducer"
-import { ChangeEvent, memo, useCallback } from "react"
-import { getListItemSx } from "./Task.tyles"
-import { useAppDispatch } from "common/hooks/useAppDispatch"
-import { EditableSpan } from "common/components"
-import { DomainTask } from "../../../../../api/tasksApi.types"
-import { TaskStatus } from "common/enums"
+import Checkbox from '@mui/material/Checkbox'
+import IconButton from '@mui/material/IconButton'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ListItem from '@mui/material/ListItem'
+import { DomainTodolist } from '../../../../../model/todolists-reducer'
+import { removeTaskTC, updateTaskTC } from '../../../../../model/tasks-reducer'
+import { ChangeEvent, memo, useCallback } from 'react'
+import { getListItemSx } from './Task.tyles'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { EditableSpan } from 'common/components'
+import { DomainTask } from '../../../../../api/tasksApi.types'
+import { TaskStatus } from 'common/enums'
 
 export type TaskProps = {
   task: DomainTask
@@ -17,7 +17,7 @@ export type TaskProps = {
 }
 
 export const Task = memo(({ task, todolist }: TaskProps) => {
-  console.log("Task")
+  console.log('Task')
   const dispatch = useAppDispatch()
 
   const removeTaskHandler = useCallback(() => {

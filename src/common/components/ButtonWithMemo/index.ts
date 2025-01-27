@@ -1,1 +1,1 @@
-export { ButtonWithMemo } from "./ButtonWithMemo"
+export { ButtonWithMemo } from './ButtonWithMemo'

@@ -1,8 +1,8 @@
-import { applyMiddleware, combineReducers, legacy_createStore, UnknownAction } from "redux"
-import { tasksReducer } from "../fatures/todolists/model/tasks-reducer"
-import { todolistsReducer } from "../fatures/todolists/model/todolists-reducer"
-import { appReducer } from "./app-reducer"
-import { thunk, ThunkDispatch } from "redux-thunk"
+import { applyMiddleware, combineReducers, legacy_createStore, UnknownAction } from 'redux'
+import { tasksReducer } from '../fatures/todolists/model/tasks-reducer'
+import { todolistsReducer } from '../fatures/todolists/model/todolists-reducer'
+import { appReducer } from './app-reducer'
+import { thunk, ThunkDispatch } from 'redux-thunk'
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,

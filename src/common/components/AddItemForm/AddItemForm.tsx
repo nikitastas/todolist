@@ -1,22 +1,23 @@
-import React, { ChangeEvent, KeyboardEvent, memo, useState } from "react"
-import IconButton from "@mui/material/IconButton"
-import TextField from "@mui/material/TextField"
-import AddBoxIcon from "@mui/icons-material/AddBox"
+import React, { ChangeEvent, KeyboardEvent, memo, useState } from 'react'
+import IconButton from '@mui/material/IconButton'
+import TextField from '@mui/material/TextField'
+import AddBoxIcon from '@mui/icons-material/AddBox'
 
 export type Props = {
   addItem: (title: string) => void
+  disabled?: boolean
 }
 
-export const AddItemForm = memo(({ addItem }: Props) => {
-  const [itemTitle, setItemTitle] = useState("")
+export const AddItemForm = memo(({ addItem, disabled }: Props) => {
+  const [itemTitle, setItemTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
 
   const addTaskHandler = () => {
-    if (itemTitle.trim() !== "") {
+    if (itemTitle.trim() !== '') {
       addItem(itemTitle.trim())
-      setItemTitle("")
+      setItemTitle('')
     } else {
-      setError("Title is required")
+      setError('Title is required')
     }
   }
   const changeTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -24,31 +25,26 @@ export const AddItemForm = memo(({ addItem }: Props) => {
   }
   const addTaskOnKeyUpHandler = (e: KeyboardEvent<HTMLInputElement>) => {
     if (error) setError(null)
-    if (e.key === "Enter") addTaskHandler()
+    if (e.key === 'Enter') addTaskHandler()
   }
 
   return (
     <div>
-      {/*<input className={error ? 'error' : ''}
-                   value={itemTitle}
-                   onChange={changeTaskTitleHandler}
-                   onKeyUp={addTaskOnKeyUpHandler}
-            />*/}
       <TextField
         label="Enter a title"
-        variant={"outlined"}
-        className={error ? "error" : ""}
+        variant={'outlined'}
+        className={error ? 'error' : ''}
         value={itemTitle}
-        size={"small"}
+        size={'small'}
         error={!!error}
         helperText={error}
         onChange={changeTaskTitleHandler}
         onKeyUp={addTaskOnKeyUpHandler}
+        disabled={disabled}
       />
-      <IconButton onClick={addTaskHandler} color={"primary"}>
+      <IconButton onClick={addTaskHandler} color={'primary'} disabled={disabled}>
         <AddBoxIcon />
       </IconButton>
-      {/*{error && <div className={'error-message'}>{error}</div>}*/}
     </div>
   )
 })

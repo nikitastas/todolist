@@ -1,5 +1,5 @@
-import React, { ChangeEvent, memo, useState } from "react"
-import TextField from "@mui/material/TextField"
+import React, { ChangeEvent, memo, useState } from 'react'
+import TextField from '@mui/material/TextField'
 
 type Props = {
   value: string
@@ -7,7 +7,7 @@ type Props = {
 }
 
 export const EditableSpan = memo(({ value, onChange }: Props) => {
-  console.log("EditableSpan")
+  console.log('EditableSpan')
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(value)
 
@@ -27,9 +27,9 @@ export const EditableSpan = memo(({ value, onChange }: Props) => {
     <>
       {editMode ? (
         <TextField
-          variant={"outlined"}
+          variant={'outlined'}
           value={title}
-          size={"small"}
+          size={'small'}
           onChange={changeTitleHandler}
           onBlur={deactivateEditModeHandler}
           autoFocus
