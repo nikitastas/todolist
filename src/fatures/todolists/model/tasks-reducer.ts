@@ -91,19 +91,33 @@ export const updateTaskAC = (payload: { taskId: string; todolistId: string; doma
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC('loading'))
-  tasksApi.getTasks(todolistId).then((res) => {
-    const tasks = res.data.items
-    dispatch(setTasksAC({ todolistId, tasks }))
-    dispatch(setAppStatusAC('succeeded'))
-  })
+  tasksApi
+    .getTasks(todolistId)
+    .then((res) => {
+      const tasks = res.data.items
+      dispatch(setTasksAC({ todolistId, tasks }))
+      dispatch(setAppStatusAC('succeeded'))
+    })
+    .catch((error) => {
+      handleServerNetworkError(error, dispatch)
+    })
 }
 
 export const removeTaskTC = (arg: { taskId: string; todolistId: string }) => (dispatch: Dispatch) => {
   dispatch(setAppStatusAC('loading'))
-  tasksApi.removeTask(arg).then((res) => {
-    dispatch(removeTaskAC(arg))
-    dispatch(setAppStatusAC('succeeded'))
-  })
+  tasksApi
+    .removeTask(arg)
+    .then((res) => {
+      if (res.data.resultCode === ResultCode.Success) {
+        dispatch(removeTaskAC(arg))
+        dispatch(setAppStatusAC('succeeded'))
+      } else {
+        handleServerAppError(res.data, dispatch)
+      }
+    })
+    .catch((error) => {
+      handleServerNetworkError(error, dispatch)
+    })
 }
 
 export const addTaskTC = (arg: { title: string; todolistId: string }) => (dispatch: Dispatch) => {
