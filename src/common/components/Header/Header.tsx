@@ -7,20 +7,27 @@ import Switch from '@mui/material/Switch'
 import AppBar from '@mui/material/AppBar'
 import { changeThemeAC, RequestStatus, ThemeMode } from '../../../app/app-reducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../../app/store'
+import { AppDispatch, RootState } from '../../../app/store'
 import { getTheme } from '../../theme'
 import { LinearProgress } from '@mui/material'
+import { selectIsLoggedIn } from '../../../fatures/auth/model/authSelectors'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { logoutTC } from '../../../fatures/auth/model/auth-reducer'
 
 export const Header = () => {
   const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
   const theme = getTheme(themeMode)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const status = useSelector<RootState, RequestStatus>((state) => state.app.status)
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const changeModeHandler = () => {
     dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
+  }
+  const onLogoutClickHandler = () => {
+    dispatch(logoutTC())
   }
 
   return (
@@ -30,8 +37,7 @@ export const Header = () => {
           <MenuIcon />
         </IconButton>
         <div>
-          <MenuButton>Login</MenuButton>
-          <MenuButton>Logout</MenuButton>
+          {isLoggedIn && <MenuButton onClick={onLogoutClickHandler}>Logout</MenuButton>}
           <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
           <Switch color={'default'} onChange={changeModeHandler} />
         </div>
