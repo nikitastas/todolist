@@ -5,6 +5,7 @@ import { authApi } from '../api/authApi'
 import { ResultCode } from 'common/enums'
 import { handleServerNetworkError } from 'common/utils/handleServerNetworkError'
 import { handleServerAppError } from 'common/utils/handleServerAppError'
+import { clearTodosDataAC } from '../../todolists/model/todolists-reducer'
 
 type InitialStateType = typeof initialState
 
@@ -56,6 +57,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
       if (res.data.resultCode === ResultCode.Success) {
         dispatch(setAppStatusAC('succeeded'))
         dispatch(setIsLoggedInAC(false))
+        dispatch(clearTodosDataAC())
         localStorage.removeItem('sn-token')
       } else {
         handleServerAppError(res.data, dispatch)

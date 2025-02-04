@@ -46,6 +46,9 @@ export const todolistsReducer = (state: DomainTodolist[] = initialState, action:
         tl.id === action.payload.id ? { ...tl, entityStatus: action.payload.entityStatus } : tl,
       )
     }
+    case 'CLEAR-DATA': {
+      return []
+    }
     default:
       return state
   }
@@ -57,6 +60,7 @@ export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 export type ChangeTodolistTitleActionType = ReturnType<typeof updateTodolistAC>
 export type ChangeTodolistFilterActionType = ReturnType<typeof changeTodolistFilterAC>
 export type ChangeTodolistEntityStatusActionType = ReturnType<typeof changeTodolistEntityStatusAC>
+export type ClearTodosDataActionType = ReturnType<typeof clearTodosDataAC>
 
 type Actions =
   | SetTodolistsActionType
@@ -65,6 +69,7 @@ type Actions =
   | ChangeTodolistTitleActionType
   | ChangeTodolistFilterActionType
   | ChangeTodolistEntityStatusActionType
+  | ClearTodosDataActionType
 
 export const setTodolistsAC = (todolists: Todolist[]) => {
   return { type: 'SET-TODOLISTS', todolists } as const
@@ -89,6 +94,8 @@ export const changeTodolistFilterAC = (payload: { id: string; filter: FilterValu
 export const changeTodolistEntityStatusAC = (payload: { id: string; entityStatus: RequestStatus }) => {
   return { type: 'CHANGE-TODOLIST-ENTITY-STATUS', payload } as const
 }
+
+export const clearTodosDataAC = () => ({ type: 'CLEAR-DATA' }) as const
 
 export const fetchTodolistsTC = () => (dispatch: Dispatch, getState: () => RootState) => {
   dispatch(setAppStatusAC('loading'))
