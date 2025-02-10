@@ -2,10 +2,10 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import { RootState } from './store'
 import { combineReducers, legacy_createStore } from 'redux'
-import { tasksReducer } from '../fatures/todolists/model/tasks-reducer'
-import { todolistsReducer } from '../fatures/todolists/model/todolists-reducer'
+import { tasksReducer } from 'fatures/todolists/model/tasksSlice'
+import { todolistsReducer } from '../fatures/todolists/model/todolistsSlice'
 import { v1 } from 'uuid'
-import { appReducer, ThemeMode } from './app-reducer'
+import { appReducer, ThemeMode } from './appSlice'
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,

@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from 'react'
 import { Alert, Snackbar } from '@mui/material'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../../app/store'
-import { setAppErrorAC } from '../../../app/app-reducer'
+import { setAppError } from '../../../app/appSlice'
 
 export const ErrorSnackbar = () => {
   const error = useSelector<RootState, string | null>((state) => state.app.error)
@@ -13,7 +13,7 @@ export const ErrorSnackbar = () => {
       return
     }
 
-    dispatch(setAppErrorAC(null))
+    dispatch(setAppError({ error: null }))
   }
 
   return (

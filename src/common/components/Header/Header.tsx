@@ -5,14 +5,13 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { MenuButton } from '../MenuButton'
 import Switch from '@mui/material/Switch'
 import AppBar from '@mui/material/AppBar'
-import { changeThemeAC, RequestStatus, ThemeMode } from '../../../app/app-reducer'
+import { changeTheme, RequestStatus, ThemeMode } from 'app/appSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from '../../../app/store'
+import { AppDispatch, RootState } from 'app/store'
 import { getTheme } from '../../theme'
 import { LinearProgress } from '@mui/material'
-import { selectIsLoggedIn } from '../../../fatures/auth/model/authSelectors'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { logoutTC } from '../../../fatures/auth/model/auth-reducer'
+import { logoutTC, selectIsLoggedIn } from 'fatures/auth/model/authSlice'
 
 export const Header = () => {
   const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
@@ -24,7 +23,7 @@ export const Header = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   const changeModeHandler = () => {
-    dispatch(changeThemeAC(themeMode === 'light' ? 'dark' : 'light'))
+    dispatch(changeTheme({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
   const onLogoutClickHandler = () => {
     dispatch(logoutTC())

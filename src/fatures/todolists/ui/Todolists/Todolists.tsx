@@ -3,9 +3,8 @@ import Grid from '@mui/material/Grid2'
 import Paper from '@mui/material/Paper'
 import { Todolist } from './Todolist/Todolist'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { selectTodolists } from '../../model/todolistsSelector'
 import { todolistsApi } from '../../api/todolistsApi'
-import { setTodolistsAC } from '../../model/todolists-reducer'
+import { selectTodolists, setTodolists } from '../../model/todolistsSlice'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 
 export const Todolists = () => {
@@ -15,7 +14,7 @@ export const Todolists = () => {
 
   useEffect(() => {
     todolistsApi.getTodolists().then((res) => {
-      dispatch(setTodolistsAC(res.data))
+      dispatch(setTodolists({ todolists: res.data }))
     })
   }, [])
 
