@@ -1,26 +1,22 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Grid from '@mui/material/Grid2'
 import Paper from '@mui/material/Paper'
 import { Todolist } from './Todolist/Todolist'
-import { useAppSelector } from 'common/hooks/useAppSelector'
-import { todolistsApi } from '../../api/todolistsApi'
-import { selectTodolists, setTodolists } from '../../model/todolistsSlice'
-import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useLazyGetTodolistsQuery } from '../../api/todolistsApi'
 
 export const Todolists = () => {
-  const todolists = useAppSelector(selectTodolists)
+  const [trigger, { data: todolists }] = useLazyGetTodolistsQuery()
 
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    todolistsApi.getTodolists().then((res) => {
-      dispatch(setTodolists({ todolists: res.data }))
-    })
-  }, [])
+  const fetchTodolistHandler = () => {
+    trigger()
+  }
 
   return (
     <>
-      {todolists.map((tl) => {
+      <div>
+        <button onClick={fetchTodolistHandler}>Загрузить тудулисты</button>
+      </div>
+      {todolists?.map((tl) => {
         return (
           <Grid key={tl.id}>
             <Paper elevation={4} sx={{ p: '0 20px 20px 20px' }}>

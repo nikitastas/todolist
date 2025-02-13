@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router'
-import { Main } from '../../app/Main'
-import { Login } from '../../fatures/auth/Login'
+import { Main } from 'app/Main'
+import { Login } from 'fatures/auth/Login'
 import { Page404 } from 'common/components'
 
 export const Path = {

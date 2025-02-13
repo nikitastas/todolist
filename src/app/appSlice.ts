@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { RootState } from 'app/store'
 
 export type ThemeMode = 'dark' | 'light'
 export type RequestStatus = 'idle' | 'loading' | 'succeeded' | 'failed'
