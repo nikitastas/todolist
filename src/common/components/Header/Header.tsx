@@ -5,13 +5,16 @@ import MenuIcon from '@mui/icons-material/Menu'
 import { MenuButton } from '../MenuButton'
 import Switch from '@mui/material/Switch'
 import AppBar from '@mui/material/AppBar'
-import { changeTheme, RequestStatus, ThemeMode } from 'app/appSlice'
+import { changeTheme, RequestStatus, selectIsLoggedIn, setIsLoggedIn, ThemeMode } from 'app/appSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from 'app/store'
 import { getTheme } from '../../theme'
 import { LinearProgress } from '@mui/material'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { logoutTC, selectIsLoggedIn } from 'fatures/auth/model/authSlice'
+import { useLogoutMutation } from 'fatures/auth/api/authApi'
+import { ResultCode } from 'common/enums'
+import { clearTasks } from 'fatures/todolists/model/tasksSlice'
+import { clearTodolists } from 'fatures/todolists/model/todolistsSlice'
 
 export const Header = () => {
   const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
@@ -25,8 +28,18 @@ export const Header = () => {
   const changeModeHandler = () => {
     dispatch(changeTheme({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
   }
+
+  const [logout] = useLogoutMutation()
+
   const onLogoutClickHandler = () => {
-    dispatch(logoutTC())
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        localStorage.removeItem('sn-token')
+        dispatch(clearTasks())
+        dispatch(clearTodolists())
+      }
+    })
   }
 
   return (

@@ -1,10 +1,9 @@
 import { tasksReducer, tasksSlice } from 'fatures/todolists/model/tasksSlice'
 import { todolistsReducer, todolistsSlice } from 'fatures/todolists/model/todolistsSlice'
 import { appReducer, appSlice } from './appSlice'
-import { authReducer, authSlice } from 'fatures/auth/model/authSlice'
 import { configureStore, ThunkAction, UnknownAction } from '@reduxjs/toolkit'
-import { todolistsApi } from 'fatures/todolists/api/todolistsApi'
 import { setupListeners } from '@reduxjs/toolkit/query'
+import { baseApi } from 'app/baseApi'
 
 /*const rootReducer = combineReducers({
   tasks: tasksReducer,
@@ -18,10 +17,9 @@ export const store = configureStore({
     [tasksSlice.name]: tasksReducer,
     [todolistsSlice.name]: todolistsReducer,
     [appSlice.name]: appReducer,
-    [authSlice.name]: authReducer,
-    [todolistsApi.reducerPath]: todolistsApi.reducer,
+    [baseApi.reducerPath]: baseApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(todolistsApi.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(baseApi.middleware),
 })
 setupListeners(store.dispatch)
 

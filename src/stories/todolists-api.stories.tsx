@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { _todolistsApi } from '../fatures/todolists/api/todolistsApi'
+import { _todolistsApi } from 'fatures/todolists/api/todolistsApi'
 
 export default {
   title: 'API',

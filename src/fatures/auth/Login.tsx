@@ -11,12 +11,12 @@ import { useAppSelector } from 'common/hooks/useAppSelector'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import s from './Login.module.css'
 import { useDispatch } from 'react-redux'
-import { loginTC, selectIsLoggedIn } from './model/authSlice'
 import { AppDispatch } from 'app/store'
-import { useNavigate } from 'react-router'
-import { useEffect } from 'react'
-import { Path } from 'common/routing/Routing'
-import { selectThemeMode } from 'app/appSlice'
+import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from 'app/appSlice'
+import { useLoginMutation } from 'fatures/auth/api/authApi'
+import { LoginArgs } from 'fatures/auth/api/authApi.types'
+import { Navigate } from 'react-router'
+import { ResultCode } from 'common/enums'
 
 type Inputs = {
   email: string
@@ -26,18 +26,12 @@ type Inputs = {
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const theme = getTheme(themeMode)
 
-  const isLoggedIn = useAppSelector(selectIsLoggedIn)
   const dispatch = useDispatch<AppDispatch>()
 
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate(Path.Main)
-    }
-  }, [isLoggedIn])
+  const [login] = useLoginMutation()
 
   const {
     register,
@@ -45,11 +39,23 @@ export const Login = () => {
     reset,
     control,
     formState: { errors },
-  } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
+  } = useForm<LoginArgs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    dispatch(loginTC(data))
-    reset()
+  const onSubmit: SubmitHandler<LoginArgs> = (data) => {
+    login(data)
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: true }))
+          localStorage.setItem('sn-token', res.data.data.token)
+        }
+      })
+      .finally(() => {
+        reset()
+      })
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to={'/'} />
   }
 
   return (

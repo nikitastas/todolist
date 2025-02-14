@@ -1,17 +1,16 @@
-import React, { useCallback, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Grid from '@mui/material/Grid2'
 import { AddItemForm } from 'common/components/AddItemForm'
 import Container from '@mui/material/Container'
-import { addTodolistTC } from 'fatures/todolists/model/todolistsSlice'
 import { Todolists } from 'fatures/todolists/ui/Todolists/Todolists'
-import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { useNavigate } from 'react-router'
 import { Path } from 'common/routing/Routing'
-import { selectIsLoggedIn } from 'fatures/auth/model/authSlice'
+import { useAddTodolistMutation } from 'fatures/todolists/api/todolistsApi'
+import { selectIsLoggedIn } from 'app/appSlice'
 
 export const Main = () => {
-  const dispatch = useAppDispatch()
+  const [addTodolist] = useAddTodolistMutation()
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const navigate = useNavigate()
@@ -21,13 +20,6 @@ export const Main = () => {
       navigate(Path.Login)
     }
   }, [isLoggedIn])
-
-  const addTodolist = useCallback(
-    (title: string) => {
-      dispatch(addTodolistTC(title))
-    },
-    [dispatch],
-  )
 
   return (
     <Container fixed>
