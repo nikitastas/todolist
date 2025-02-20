@@ -15,6 +15,7 @@ import { useLogoutMutation } from 'fatures/auth/api/authApi'
 import { ResultCode } from 'common/enums'
 import { clearTasks } from 'fatures/todolists/model/tasksSlice'
 import { clearTodolists } from 'fatures/todolists/model/todolistsSlice'
+import { baseApi } from 'app/baseApi'
 
 export const Header = () => {
   const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
@@ -31,15 +32,17 @@ export const Header = () => {
 
   const [logout] = useLogoutMutation()
 
-  const onLogoutClickHandler = () => {
-    logout().then((res) => {
-      if (res.data?.resultCode === ResultCode.Success) {
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        localStorage.removeItem('sn-token')
-        dispatch(clearTasks())
-        dispatch(clearTodolists())
-      }
-    })
+  const onLogoutHandler = () => {
+    logout()
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          localStorage.removeItem('sn-token')
+        }
+      })
+      .then(() => {
+        dispatch(baseApi.util.invalidateTags(['Todolist', 'Task']))
+      })
   }
 
   return (
@@ -49,7 +52,7 @@ export const Header = () => {
           <MenuIcon />
         </IconButton>
         <div>
-          {isLoggedIn && <MenuButton onClick={onLogoutClickHandler}>Logout</MenuButton>}
+          {isLoggedIn && <MenuButton onClick={onLogoutHandler}>Logout</MenuButton>}
           <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
           <Switch color={'default'} onChange={changeModeHandler} />
         </div>

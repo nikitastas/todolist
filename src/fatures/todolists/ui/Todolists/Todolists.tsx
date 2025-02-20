@@ -2,22 +2,25 @@ import React from 'react'
 import Grid from '@mui/material/Grid2'
 import Paper from '@mui/material/Paper'
 import { Todolist } from './Todolist/Todolist'
-import { useGetTodolistsQuery, useLazyGetTodolistsQuery } from '../../api/todolistsApi'
+import { useGetTodolistsQuery } from '../../api/todolistsApi'
+import { TodolistSkeleton } from 'fatures/todolists/ui/skeletons/TodolistSkeleton/TodolistSkeleton'
 
 export const Todolists = () => {
-  /*const [trigger, { data: todolists }] = useLazyGetTodolistsQuery()
+  const { data: todolists, isLoading } = useGetTodolistsQuery()
 
-  const fetchTodolistHandler = () => {
-    trigger()
-  }*/
-
-  const { data: todolists, refetch } = useGetTodolistsQuery()
-
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '32px' }}>
+        {Array(3)
+          .fill(null)
+          .map((_, id) => (
+            <TodolistSkeleton key={id} />
+          ))}
+      </div>
+    )
+  }
   return (
     <>
-      <div>
-        <button onClick={refetch}>Получить свежие данные</button>
-      </div>
       {todolists?.map((tl) => {
         return (
           <Grid key={tl.id}>
