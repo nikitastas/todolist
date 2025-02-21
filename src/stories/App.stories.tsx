@@ -4,7 +4,6 @@ import { App } from '../app/App'
 import { Provider } from 'react-redux'
 import { store } from '../app/store'
 import { StoryFn } from '@storybook/react'
-import { ReduxStoreProviderDecorator } from '../app/ReduxStoreProviderDecorator'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof App> = {
@@ -23,7 +22,7 @@ const meta: Meta<typeof App> = {
       action: 'clicked'
     },
   },*/
-  decorators: [ReduxStoreProviderDecorator],
+  //decorators: [ReduxStoreProviderDecorator],
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
 } // satisfies Meta<typeof Button>;
 

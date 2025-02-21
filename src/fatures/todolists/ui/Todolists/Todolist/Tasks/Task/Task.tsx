@@ -3,14 +3,13 @@ import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ListItem from '@mui/material/ListItem'
 import { DomainTodolist } from '../../../../../model/todolistsSlice'
-import { removeTaskTC } from 'fatures/todolists/model/tasksSlice'
 import { ChangeEvent, useCallback } from 'react'
 import { getListItemSx } from './Task.tyles'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { EditableSpan } from 'common/components'
 import { DomainTask, UpdateTaskModel } from '../../../../../api/tasksApi.types'
 import { TaskStatus } from 'common/enums'
-import { useUpdateTaskMutation } from 'fatures/todolists/api/tasksApi'
+import { useRemoveTaskMutation, useUpdateTaskMutation } from 'fatures/todolists/api/tasksApi'
 
 export type TaskProps = {
   task: DomainTask
@@ -20,8 +19,9 @@ export type TaskProps = {
 export const Task = ({ task, todolist }: TaskProps) => {
   const dispatch = useAppDispatch()
 
+  const [removeTask] = useRemoveTaskMutation()
   const removeTaskHandler = useCallback(() => {
-    dispatch(removeTaskTC({ taskId: task.id, todolistId: todolist.id }))
+    removeTask({ taskId: task.id, todolistId: todolist.id })
   }, [dispatch, task.id, todolist.id])
 
   const [updateTask] = useUpdateTaskMutation()

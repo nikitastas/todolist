@@ -2,10 +2,10 @@ import { AddItemForm } from 'common/components/AddItemForm'
 import { FilterTasksButtons } from './FilterTasksButtons/FilterTasksButtons'
 import { Tasks } from './Tasks/Tasks'
 import { TodolistTitle } from './TodolistTitle/TodolistTitle'
-import { addTaskTC } from 'fatures/todolists/model/tasksSlice'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { memo, useCallback } from 'react'
 import { DomainTodolist } from '../../../model/todolistsSlice'
+import { useCreateTaskMutation } from '../../../api/tasksApi'
 
 type Props = {
   todolist: DomainTodolist
@@ -14,9 +14,10 @@ type Props = {
 export const Todolist = memo(({ todolist }: Props) => {
   const dispatch = useAppDispatch()
 
+  const [addTask] = useCreateTaskMutation()
   const addTaskCallback = useCallback(
     (title: string) => {
-      dispatch(addTaskTC({ title, todolistId: todolist.id }))
+      addTask({ title, todolistId: todolist.id })
     },
     [dispatch, todolist.id],
   )

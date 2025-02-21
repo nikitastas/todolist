@@ -1,5 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import * as process from 'process'
+import { isErrorWithMessage } from 'common/utils/isErrorWithMessage'
+import { ResultCode } from 'common/enums'
+import { handleError } from 'common/utils/handleError'
 
 export const baseApi = createApi({
   reducerPath: 'todolistsApi',
@@ -12,14 +15,7 @@ export const baseApi = createApi({
       },
     })(args, api, extraOptions)
 
-    if (result.error) {
-      if (result.error.status === 'FETCH_ERROR') {
-        api.dispatch({
-          type: 'app/setAppError',
-          payload: { error: result.error.error },
-        })
-      }
-    }
+    handleError(api, result)
 
     return result
   },

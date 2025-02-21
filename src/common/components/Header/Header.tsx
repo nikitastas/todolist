@@ -13,8 +13,6 @@ import { LinearProgress } from '@mui/material'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { useLogoutMutation } from 'fatures/auth/api/authApi'
 import { ResultCode } from 'common/enums'
-import { clearTasks } from 'fatures/todolists/model/tasksSlice'
-import { clearTodolists } from 'fatures/todolists/model/todolistsSlice'
 import { baseApi } from 'app/baseApi'
 
 export const Header = () => {
