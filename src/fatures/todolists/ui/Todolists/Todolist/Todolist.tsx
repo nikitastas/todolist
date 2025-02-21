@@ -12,7 +12,6 @@ type Props = {
 }
 
 export const Todolist = memo(({ todolist }: Props) => {
-  console.log(`Todolist ${todolist.title}`)
   const dispatch = useAppDispatch()
 
   const addTaskCallback = useCallback(

@@ -3,7 +3,8 @@
     justify-content: space-between;
 }
 .todolist {
-    width: 305px;
+    width: 100%;
+    max-width: 305px;
     padding: 10px 20px;
 }
 .todolistTitle {
@@ -15,7 +16,6 @@
     composes: common;
     align-items: center;
 }
-
 .tasks {
     composes: common;
     gap: 15px;

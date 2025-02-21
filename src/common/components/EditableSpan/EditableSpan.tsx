@@ -8,7 +8,6 @@ type Props = {
 }
 
 export const EditableSpan = memo(({ value, onChange, disabled }: Props) => {
-  console.log('EditableSpan')
   const [editMode, setEditMode] = useState(false)
   const [title, setTitle] = useState(value)
 
