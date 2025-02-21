@@ -2,7 +2,6 @@ import s from './TodolistTitle.module.css'
 import { EditableSpan } from 'common/components/EditableSpan'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { DomainTodolist } from '../../../../model/todolistsSlice'
 import {
   todolistsApi,
   useRemoveTodolistMutation,
@@ -10,6 +9,7 @@ import {
 } from 'fatures/todolists/api/todolistsApi'
 import { RequestStatus } from 'app/appSlice'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { DomainTodolist } from '../../../../lib/types/types'
 
 type Props = {
   todolist: DomainTodolist

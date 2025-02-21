@@ -4,8 +4,8 @@ import { Tasks } from './Tasks/Tasks'
 import { TodolistTitle } from './TodolistTitle/TodolistTitle'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { memo, useCallback } from 'react'
-import { DomainTodolist } from '../../../model/todolistsSlice'
 import { useCreateTaskMutation } from '../../../api/tasksApi'
+import { DomainTodolist } from '../../../lib/types/types'
 
 type Props = {
   todolist: DomainTodolist
