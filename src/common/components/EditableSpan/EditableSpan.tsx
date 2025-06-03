@@ -1,5 +1,5 @@
-import React, { ChangeEvent, memo, useState } from 'react'
-import TextField from '@mui/material/TextField'
+import TextField from "@mui/material/TextField"
+import { type ChangeEvent, useState } from "react"
 
 type Props = {
   value: string
@@ -7,39 +7,38 @@ type Props = {
   disabled?: boolean
 }
 
-export const EditableSpan = memo(({ value, onChange, disabled }: Props) => {
-  const [editMode, setEditMode] = useState(false)
+export const EditableSpan = ({ value, onChange, disabled }: Props) => {
   const [title, setTitle] = useState(value)
+  const [isEditMode, setIsEditMode] = useState(false)
 
-  const activateEditModeHandler = () => {
-    if (disabled) {
-      return
-    }
-    setEditMode(true)
+  const turnOnEditMode = () => {
+    if (disabled) return
+    setIsEditMode(true)
   }
 
-  const deactivateEditModeHandler = () => {
-    setEditMode(false)
+  const turnOffEditMode = () => {
+    setIsEditMode(false)
     onChange(title)
   }
 
-  const changeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
+  const changeTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.currentTarget.value)
   }
+
   return (
     <>
-      {editMode ? (
+      {isEditMode ? (
         <TextField
-          variant={'outlined'}
+          variant={"outlined"}
           value={title}
-          size={'small'}
-          onChange={changeTitleHandler}
-          onBlur={deactivateEditModeHandler}
+          size={"small"}
+          onChange={changeTitle}
+          onBlur={turnOffEditMode}
           autoFocus
         />
       ) : (
-        <span onDoubleClick={activateEditModeHandler}>{value}</span>
+        <span onDoubleClick={turnOnEditMode}>{value}</span>
       )}
     </>
   )
-})
+}

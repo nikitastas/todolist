@@ -1,50 +1,52 @@
-import { ThemeProvider } from '@mui/material/styles'
-import CssBaseline from '@mui/material/CssBaseline'
-import { getTheme } from 'common/theme'
-import { Header } from 'common/components/Header'
-import { useAppSelector } from 'common/hooks/useAppSelector'
-import { useEffect, useState } from 'react'
-import { useAppDispatch } from 'common/hooks/useAppDispatch'
-import { ErrorSnackbar } from 'common/components'
-import { Routing } from 'common/routing'
-import { CircularProgress } from '@mui/material'
-import s from './App.module.css'
-import { selectThemeMode, setIsLoggedIn } from 'app/appSlice'
-import { useMeQuery } from 'fatures/auth/api/authApi'
-import { ResultCode } from 'common/enums'
+import "./App.css"
+import { selectThemeMode, setIsLoggedInAC } from "@/app/app-slice"
+import { ErrorSnackbar, Header } from "@/common/components"
+import { ResultCode } from "@/common/enums"
+import { useAppDispatch, useAppSelector } from "@/common/hooks"
+import { Routing } from "@/common/routing"
+import { getTheme } from "@/common/theme"
+import { useMeQuery } from "@/features/auth/api/authApi"
+import CircularProgress from "@mui/material/CircularProgress"
+import CssBaseline from "@mui/material/CssBaseline"
+import { ThemeProvider } from "@mui/material/styles"
+import { useEffect, useState } from "react"
+import styles from "./App.module.css"
 
 export const App = () => {
-  const themeMode = useAppSelector(selectThemeMode)
-
   const [isInitialized, setIsInitialized] = useState(false)
 
-  const dispatch = useAppDispatch()
+  const themeMode = useAppSelector(selectThemeMode)
 
   const { data, isLoading } = useMeQuery()
 
+  const dispatch = useAppDispatch()
+
+  const theme = getTheme(themeMode)
+
   useEffect(() => {
-    if (!isLoading) {
-      setIsInitialized(true)
-      if (data?.resultCode === ResultCode.Success) {
-        dispatch(setIsLoggedIn({ isLoggedIn: true }))
-      }
+    if (isLoading) return
+    setIsInitialized(true)
+    if (data?.resultCode === ResultCode.Success) {
+      dispatch(setIsLoggedInAC({ isLoggedIn: true }))
     }
-  }, [isLoading, data])
+  }, [isLoading])
 
   if (!isInitialized) {
     return (
-      <div className={s.circularProgressContainer}>
+      <div className={styles.circularProgressContainer}>
         <CircularProgress size={150} thickness={3} />
       </div>
     )
   }
 
   return (
-    <ThemeProvider theme={getTheme(themeMode)}>
-      <CssBaseline />
-      <Header />
-      <Routing />
-      <ErrorSnackbar />
+    <ThemeProvider theme={theme}>
+      <div className={styles.app}>
+        <CssBaseline />
+        <Header />
+        <Routing />
+        <ErrorSnackbar />
+      </div>
     </ThemeProvider>
   )
 }

@@ -1,6 +1,7 @@
-export { EditableSpan } from './EditableSpan'
-export { AddItemForm } from './AddItemForm'
-export { MenuButton } from './MenuButton'
-export { Header } from './Header'
-export { ErrorSnackbar } from './ErrorSnackbar'
-export { Page404 } from './Page404'
+export { CreateItemForm } from "./CreateItemForm/CreateItemForm"
+export { EditableSpan } from "./EditableSpan/EditableSpan"
+export { ErrorSnackbar } from "./ErrorSnackbar/ErrorSnackbar"
+export { Header } from "./Header/Header"
+export { NavButton } from "./NavButton/NavButton"
+export { PageNotFound } from "./PageNotFound/PageNotFound"
+export { ProtectedRoute } from "./ProtectedRoute/ProtectedRoute"

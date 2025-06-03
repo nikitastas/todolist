@@ -1,24 +1,15 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import * as process from 'process'
-import { isErrorWithMessage } from 'common/utils/isErrorWithMessage'
-import { ResultCode } from 'common/enums'
-import { handleError } from 'common/utils/handleError'
+import { AUTH_TOKEN } from "@/common/constants"
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const baseApi = createApi({
-  reducerPath: 'todolistsApi',
-  baseQuery: async (args, api, extraOptions) => {
-    const result = await fetchBaseQuery({
-      baseUrl: process.env.REACT_APP_BASE_URL,
-      prepareHeaders: (headers) => {
-        headers.set('API-KEY', `${process.env.REACT_APP_API_KEY}`)
-        headers.set('Authorization', `Bearer ${localStorage.getItem('sn-token')}`)
-      },
-    })(args, api, extraOptions)
-
-    handleError(api, result)
-
-    return result
-  },
+  reducerPath: "todolistsApi",
+  tagTypes: ["Todolist", "Task"],
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      headers.set("API-KEY", import.meta.env.VITE_API_KEY)
+      headers.set("Authorization", `Bearer ${localStorage.getItem(AUTH_TOKEN)}`)
+    },
+  }),
   endpoints: () => ({}),
-  tagTypes: ['Todolist', 'Task'],
 })

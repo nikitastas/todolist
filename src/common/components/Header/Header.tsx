@@ -1,61 +1,66 @@
-import React from 'react'
-import Toolbar from '@mui/material/Toolbar'
-import IconButton from '@mui/material/IconButton'
-import MenuIcon from '@mui/icons-material/Menu'
-import { MenuButton } from '../MenuButton'
-import Switch from '@mui/material/Switch'
-import AppBar from '@mui/material/AppBar'
-import { changeTheme, RequestStatus, selectIsLoggedIn, setIsLoggedIn, ThemeMode } from 'app/appSlice'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppDispatch, RootState } from 'app/store'
-import { getTheme } from '../../theme'
-import { LinearProgress } from '@mui/material'
-import { useAppSelector } from 'common/hooks/useAppSelector'
-import { useLogoutMutation } from 'fatures/auth/api/authApi'
-import { ResultCode } from 'common/enums'
-import { baseApi } from 'app/baseApi'
+import {
+  changeThemeModeAC,
+  selectAppStatus,
+  selectIsLoggedIn,
+  selectThemeMode,
+  setIsLoggedInAC,
+} from "@/app/app-slice.ts"
+import { clearDataAC } from "@/common/actions"
+import { NavButton } from "@/common/components/NavButton/NavButton"
+import { AUTH_TOKEN } from "@/common/constants"
+import { ResultCode } from "@/common/enums"
+import { useAppDispatch, useAppSelector } from "@/common/hooks"
+import { containerSx } from "@/common/styles"
+import { getTheme } from "@/common/theme"
+import { useLogoutMutation } from "@/features/auth/api/authApi"
+import MenuIcon from "@mui/icons-material/Menu"
+import AppBar from "@mui/material/AppBar"
+import Container from "@mui/material/Container"
+import IconButton from "@mui/material/IconButton"
+import LinearProgress from "@mui/material/LinearProgress"
+import Switch from "@mui/material/Switch"
+import Toolbar from "@mui/material/Toolbar"
 
 export const Header = () => {
-  const themeMode = useSelector<RootState, ThemeMode>((state) => state.app.themeMode)
-  const theme = getTheme(themeMode)
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
-
-  const status = useSelector<RootState, RequestStatus>((state) => state.app.status)
-
-  const dispatch = useDispatch<AppDispatch>()
-
-  const changeModeHandler = () => {
-    dispatch(changeTheme({ themeMode: themeMode === 'light' ? 'dark' : 'light' }))
-  }
+  const themeMode = useAppSelector(selectThemeMode)
+  const status = useAppSelector(selectAppStatus)
 
   const [logout] = useLogoutMutation()
 
-  const onLogoutHandler = () => {
-    logout()
-      .then((res) => {
-        if (res.data?.resultCode === ResultCode.Success) {
-          dispatch(setIsLoggedIn({ isLoggedIn: false }))
-          localStorage.removeItem('sn-token')
-        }
-      })
-      .then(() => {
-        dispatch(baseApi.util.invalidateTags(['Todolist', 'Task']))
-      })
+  const dispatch = useAppDispatch()
+
+  const theme = getTheme(themeMode)
+
+  const changeMode = () => {
+    dispatch(changeThemeModeAC({ themeMode: themeMode === "light" ? "dark" : "light" }))
+  }
+
+  const logoutHandler = () => {
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedInAC({ isLoggedIn: false }))
+        localStorage.removeItem(AUTH_TOKEN)
+        dispatch(clearDataAC())
+      }
+    })
   }
 
   return (
-    <AppBar position="static" sx={{ mb: '30px' }}>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <IconButton color="inherit">
-          <MenuIcon />
-        </IconButton>
-        <div>
-          {isLoggedIn && <MenuButton onClick={onLogoutHandler}>Logout</MenuButton>}
-          <MenuButton background={theme.palette.primary.dark}>Faq</MenuButton>
-          <Switch color={'default'} onChange={changeModeHandler} />
-        </div>
+    <AppBar position="static" sx={{ mb: "30px" }}>
+      <Toolbar>
+        <Container maxWidth={"lg"} sx={containerSx}>
+          <IconButton color="inherit">
+            <MenuIcon />
+          </IconButton>
+          <div>
+            {isLoggedIn && <NavButton onClick={logoutHandler}>Sign out</NavButton>}
+            <NavButton background={theme.palette.primary.dark}>Faq</NavButton>
+            <Switch color={"default"} onChange={changeMode} />
+          </div>
+        </Container>
       </Toolbar>
-      {status === 'loading' && <LinearProgress />}
+      {status === "loading" && <LinearProgress />}
     </AppBar>
   )
 }

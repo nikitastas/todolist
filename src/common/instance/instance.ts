@@ -1,14 +1,14 @@
-import axios from 'axios'
+import { AUTH_TOKEN } from "@/common/constants"
+import axios from "axios"
 
 export const instance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
-    'API-KEY': process.env.REACT_APP_API_KEY,
+    "API-KEY": import.meta.env.VITE_API_KEY,
   },
 })
 
 instance.interceptors.request.use(function (config) {
-  config.headers['Authorization'] = `Bearer ${localStorage.getItem('sn-token')}`
-
+  config.headers["Authorization"] = `Bearer ${localStorage.getItem(AUTH_TOKEN)}`
   return config
 })
