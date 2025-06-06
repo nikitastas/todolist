@@ -4,9 +4,6 @@ import type { DomainTodolist } from "@/features/todolists/model/todolists-slice"
 import List from "@mui/material/List"
 import { TaskItem } from "./TaskItem/TaskItem"
 import { TasksSkeleton } from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx"
-import { useAppDispatch } from "@/common/hooks"
-import { useEffect } from "react"
-import { setAppErrorAC } from "@/app/app-slice.ts"
 
 type Props = {
   todolist: DomainTodolist
@@ -15,19 +12,7 @@ type Props = {
 export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
-  const { data, isLoading, error } = useGetTasksQuery(id)
-
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    if (!error) return
-    if ("status" in error) {
-      const errMsg = "error" in error ? error.error : JSON.stringify(error.data)
-      dispatch(setAppErrorAC({ error: errMsg }))
-    } else {
-      dispatch(setAppErrorAC({ error: error.message || "Some error occurred" }))
-    }
-  }, [error])
+  const { data, isLoading } = useGetTasksQuery(id)
 
   let filteredTasks = data?.items
   if (filter === "active") {
