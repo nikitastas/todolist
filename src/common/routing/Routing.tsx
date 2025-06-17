@@ -6,10 +6,9 @@ import { Login } from "@/features/auth/ui/Login/Login"
 import { Route, Routes } from "react-router"
 
 export const Path = {
-  Main: "/",
-  Login: "login",
+  Main: "/todolist",
+  Login: "/todolist/login",
   NotFound: "*",
-  Todolist: "/todolist",
 } as const
 
 export const Routing = () => {
@@ -19,9 +18,6 @@ export const Routing = () => {
     <Routes>
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectPath={Path.Login} />}>
         <Route path={Path.Main} element={<Main />} />
-      </Route>
-      <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectPath={Path.Login} />}>
-        <Route path={Path.Todolist} element={<Main />} />
       </Route>
       <Route element={<ProtectedRoute isAllowed={!isLoggedIn} />}>
         <Route path={Path.Login} element={<Login />} />
