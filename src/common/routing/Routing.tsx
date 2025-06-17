@@ -9,6 +9,7 @@ export const Path = {
   Main: "/",
   Login: "login",
   NotFound: "*",
+  Todolist: "/todolist",
 } as const
 
 export const Routing = () => {
@@ -18,6 +19,9 @@ export const Routing = () => {
     <Routes>
       <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectPath={Path.Login} />}>
         <Route path={Path.Main} element={<Main />} />
+      </Route>
+      <Route element={<ProtectedRoute isAllowed={isLoggedIn} redirectPath={Path.Login} />}>
+        <Route path={Path.Todolist} element={<Main />} />
       </Route>
       <Route element={<ProtectedRoute isAllowed={!isLoggedIn} />}>
         <Route path={Path.Login} element={<Login />} />
