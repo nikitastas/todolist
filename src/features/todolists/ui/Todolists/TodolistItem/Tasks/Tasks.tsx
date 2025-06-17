@@ -6,6 +6,7 @@ import { TasksSkeleton } from "@/features/todolists/ui/Todolists/TodolistItem/Ta
 import { DomainTodolist } from "@/features/todolists/lib/types"
 import { useState } from "react"
 import { TasksPagination } from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksPagination/TasksPagination.tsx"
+import { PAGE_SIZE } from "@/common/constants"
 
 type Props = {
   todolist: DomainTodolist
@@ -30,6 +31,8 @@ export const Tasks = ({ todolist }: Props) => {
     return <TasksSkeleton />
   }
 
+  const showPagination = data && data.totalCount > PAGE_SIZE
+
   return (
     <>
       {filteredTasks?.length === 0 ? (
@@ -37,7 +40,7 @@ export const Tasks = ({ todolist }: Props) => {
       ) : (
         <>
           <List>{filteredTasks?.map((task) => <TaskItem key={task.id} task={task} todolist={todolist} />)}</List>
-          <TasksPagination totalCount={data?.totalCount || 0} page={page} setPage={setPage} />
+          {showPagination && <TasksPagination totalCount={data?.totalCount || 0} page={page} setPage={setPage} />}
         </>
       )}
     </>
